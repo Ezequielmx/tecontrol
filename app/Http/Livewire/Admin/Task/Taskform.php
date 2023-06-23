@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Task;
 
+use App\Http\Controllers\Admin\TaskController;
 use Livewire\Component;
 use App\Models\Task;
 
@@ -31,11 +32,9 @@ class Taskform extends Component
     }
 
     public function guardar(){
-        
         $this->validate();
         $this->task->save();
-        $this->emit('cerrarModal', $this->task);
-        
+        $this->emit('cerrarModal');  
     }
 
     public function setFecha($fecha){

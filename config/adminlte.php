@@ -386,6 +386,18 @@ return [
             'icon'        => 'fas fa-fw fa-boxes',
             
         ],
+        [
+            'text'        => 'Asistencias',
+            'route'       => 'admin.asistencias.index',
+            'icon'        => 'fas fa-tools',     
+        ],
+        [
+            'text'        => 'Certificados',
+            'route'       => 'admin.certificados.index',
+            'icon'        => 'fas fa-certificate',     
+        ],
+
+
         ['header' => 'account_settings'],
         [
             'text' => 'profile',

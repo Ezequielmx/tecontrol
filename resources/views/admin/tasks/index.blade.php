@@ -25,6 +25,17 @@
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js"></script>
 
 <script>
+
+    $(document).ready(function(){
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            }
+        });
+
+        var calendar = $('#calendar').fullCalendar();
+    })
+    /*
     document.addEventListener('DOMContentLoaded', function() {
           const calendarEl = document.getElementById('calendar');
 
@@ -56,10 +67,10 @@
 
           calendar.render();
           
-          Livewire.on('cerrarModal', function(task) {
+          Livewire.on('cerrarModal', function() {
             $('#tarea').modal('hide');
             });
-        });
+        });*/
   
 </script>
 @endpush

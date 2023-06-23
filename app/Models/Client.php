@@ -41,4 +41,9 @@ class Client extends Model
     {
         return $this->hasMany('App\Models\Quotation');
     }
+
+    public function asistencias()
+    {
+        return $this->hasMany('App\Models\Asistencia');
+    }
 }
