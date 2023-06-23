@@ -26,11 +26,6 @@
                         <input wire:model="hasta" type="date" class="form-control">
                     </div>
                 </div>
-                <div class="col text-right">
-                    <!--button create route creat-->
-                    <a href="{{ route('admin.asistencias.create') }}" class="btn btn-success btn-sm">Nueva
-                        Asistencia</a>
-                </div>
             </div>
 
 
@@ -59,7 +54,7 @@
                     @foreach ($asistencia->hojas as $hoja)
                     @foreach ($hoja->detalles as $detalle)
                     @if($detalle->certificado)
-                    <tr>
+                    <tr class="{{ $detalle->fechacliente? 'table-success' : '' }}">
                         <td>{{ $asistencia->nro }}</td>
                         <td style="white-space: nowrap">{{ date('d-m-Y', strtotime($asistencia->fecha)) }}</td>
                         <td>{{ $asistencia->client->razon_social }}</td>
