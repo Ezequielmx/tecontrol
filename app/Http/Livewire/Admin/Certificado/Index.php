@@ -7,15 +7,21 @@ use App\Models\User;
 use App\Models\Client;
 use App\Models\Asistencia;
 use App\Models\Detallehoja;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 
 class Index extends Component
 {
+    use WithFileUploads;
+
     public $tecnicos;
     public $asistencias;
     public $clients;
     public $client_id;
     public $desde;
     public $hasta;
+    public $certpdf;
+    public $detalleact_id;
 
     public function mount()
     {
@@ -41,15 +47,15 @@ class Index extends Component
     {
         $this->asistencias = Asistencia::orderBy('fecha');
 
-        if($this->desde){
+        if ($this->desde) {
             $this->asistencias = $this->asistencias->where('fecha', '>=', $this->desde);
         }
 
-        if($this->hasta){
+        if ($this->hasta) {
             $this->asistencias = $this->asistencias->where('fecha', '<=', $this->hasta);
         }
 
-        if($this->client_id){
+        if ($this->client_id) {
             $this->asistencias = $this->asistencias->where('client_id', $this->client_id);
         }
 
@@ -70,5 +76,30 @@ class Index extends Component
         $detallehoja->$field = $value;
         $detallehoja->save();
         $this->asistencias = $this->asistencias->fresh();
+    }
+
+
+    //function if update $this->certpdf
+
+    public function seldet($detalle_id){
+        $this->detalleact_id = $detalle_id;
+    }
+
+
+
+    public function updatedCertpdf()
+    {
+        $detallehoja = Detallehoja::find($this->detalleact_id);
+
+        if ($detallehoja->certpdf) {
+            $rutaReal = realpath(storage_path('app/' . $detallehoja->certpdf));
+            if ($rutaReal && Storage::exists($rutaReal)) {
+                Storage::delete($detallehoja->certpdf);
+            }
+        }
+
+        $detallehoja->certpdf = $this->certpdf->store('certificados', 'public');
+        $detallehoja->save();
+        $this->detalleact_id = null;
     }
 }

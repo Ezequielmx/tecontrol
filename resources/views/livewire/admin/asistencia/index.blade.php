@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card-body">
             <div class="row" style="align-items: center;">
-                <div class="col col-md-5">
+                <div class="col col-md-4">
                     <!--client select-->
                     <div class="form-group">
                         <label for="client_id">Cliente</label>
@@ -14,6 +14,13 @@
                         </select>
                     </div>
                 </div>
+                <div class="col col-md-2">
+                    <div class="form-group">
+                        <label for="hojanro">Hoja nro</label>
+                        <input wire:model="hojanro" type="text" class="form-control">
+                    </div>
+                </div>
+
                 <div class="col col-md-2">
                     <div class="form-group">
                         <label for="desde">Desde</label>
@@ -42,6 +49,7 @@
                 <thead>
                     <tr>
                         <th>Nro</th>
+                        <th>Hojas</th>
                         <th>Cliente</th>
                         <th>Fecha</th>
                         <th>Programada</th>
@@ -55,6 +63,11 @@
                 @foreach ($asistencias as $asistencia)
                 <tr>
                     <td>{{ $asistencia->id }}</td>
+                    <td>
+                        @foreach ($asistencia->hojas as $hoja)
+                        {{ $hoja->nro }}<br>
+                        @endforeach
+                    </td>
                     <td>{{ $asistencia->client->razon_social }}</td>
                     <td>{{ date('Y-m-d', strtotime($asistencia->fecha)) }}</td>
                     <td>{{ $asistencia->programada? 'SI' : 'NO' }}</td>

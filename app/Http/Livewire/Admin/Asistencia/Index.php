@@ -17,6 +17,7 @@ class Index extends Component
     public $client_id;
     public $desde;
     public $hasta;
+    public $hojanro;
 
     public function mount()
     {
@@ -37,6 +38,7 @@ class Index extends Component
         }
 
         $this->client_id = session('client_id_asist');
+        $this->hojanro = session('hojanro_asist');
     }
 
     public function render()
@@ -55,6 +57,13 @@ class Index extends Component
             $this->asistencias = $this->asistencias->where('client_id', $this->client_id);
         }
 
+        if($this->hojanro){
+            // asistencias where asistencia->hojas where hoja->nro 
+            $this->asistencias = $this->asistencias->whereHas('hojas', function($query){
+                $query->where('nro', 'like', '%'.$this->hojanro.'%');
+            });
+        }
+
         $this->asistencias = $this->asistencias->get();
 
         session(
@@ -62,6 +71,7 @@ class Index extends Component
                 'client_id_asist' => $this->client_id,
                 'desde_asist' => $this->desde,
                 'hasta_asist' => $this->hasta,
+                'hojanro_asist' => $this->hojanro
             ]
         );
 

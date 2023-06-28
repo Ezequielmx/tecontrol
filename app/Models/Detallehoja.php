@@ -13,6 +13,11 @@ class Detallehoja extends Model
         'hojasasistencia_id',
         'detalle',
         'certificado',
+        'quotation_id',
+        'user_id',
+        'fechaborrador',
+        'fechacliente',
+        'certpdf'
     ];
 
     public function user(){

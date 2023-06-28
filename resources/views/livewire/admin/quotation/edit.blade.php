@@ -271,7 +271,7 @@
         <a href="{{ route('admin.cotizaciones.index') }}" class="btn btn-secondary">Cancelar</a>
         <a href="{{ route('admin.cotizaciones.print', $quotation) }}" target="_blank" class="btn btn-danger"><i
                 class="fa fa-file-pdf">
-            </i></button></a>
+            </i></a>
     </div>
 
 
