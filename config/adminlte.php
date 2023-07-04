@@ -396,6 +396,11 @@ return [
             'route'       => 'admin.certificados.index',
             'icon'        => 'fas fa-certificate',     
         ],
+        [
+            'text'        => 'Usuarios',
+            'route'       => 'admin.usuarios.index',
+            'icon'        => 'fas fa-fw fa-users',   
+        ],
 
 
         ['header' => 'account_settings'],

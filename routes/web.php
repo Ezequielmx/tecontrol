@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,8 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
+    //if role is admin return route admin, else return route user
+    if (auth()->user()->hasRole('Cliente')) {
+        return view('cliente');
+    } else {
+        return redirect()->route('admin.home');
+    }
+    //return view('welcome');
 });
 
 Route::middleware([

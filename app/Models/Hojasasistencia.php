@@ -20,6 +20,10 @@ class Hojasasistencia extends Model
     }
 
     public function asistencia(){
-        return $this->hasOne('App\Models\Asistencia');
+        return $this->belongsTo('App\Models\Asistencia');
+    }
+
+    public function certCount(){
+        return $this->detalles->where('certpf','!=',null)->count();
     }
 }

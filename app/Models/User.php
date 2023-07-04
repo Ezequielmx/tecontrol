@@ -29,6 +29,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'client_id',
     ];
 
     /**
@@ -60,4 +61,10 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function cliente()
+    {
+        return $this->belongsTo('App\Models\Client', 'client_id');
+    }
+
 }
