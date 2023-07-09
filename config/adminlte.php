@@ -326,148 +326,94 @@ return [
             'text'        => 'Home',
             'url'         => 'admin',
             'icon'        => 'fas fa-tachometer-alt',
+            'can'         => 'admin.home',  
         ],
+        /*
         [
             'text'        => 'Calendario',
             'route'       => 'admin.tasks.index',
             'icon'        => 'fa fa-calendar',
             
-        ],
+        ],*/
         [
             'text'        => 'Categorias',
             'route'       => 'admin.categories.index',
             'icon'        => 'fas fa-fw fa-list',
+            'can'         => 'admin.categorias.index',
             
         ],
         [
             'text'        => 'Productos',
             'route'       => 'admin.products.index',
             'icon'        => 'fas fa-fw fa-boxes',
+            'can'         => 'admin.productos.index',
            
         ],
         [
             'text'        => 'Clientes',
             'route'       => 'admin.clients.index',
             'icon'        => 'fas fa-fw fa-users',
+            'can'         => 'admin.clientes.index',
             
         ],
         [
             'text'        => 'Proveedores',
             'route'       => 'admin.suppliers.index',
             'icon'        => 'fas fa-fw fa-truck',
+            'can'         => 'admin.proveedores.index',
             
         ],
+        /*
         [
             'text'        => 'Mails',
             'url'       => 'admin.mails.index',
             'icon'        => 'fas fa-fw fa-envelope',
             
-        ],
+        ],*/
+
         [
             'text'        => 'Cotizaciones',
             'route'       => 'admin.cotizaciones.index',
             'icon'        => 'fas fa-fw fa-dollar-sign',
+            'can'         => 'admin.cotizaciones.index',
             
-        ],
+        ],/*
         [
             'text'        => 'Pedidos',
             'url'       => 'admin.pedidos.index',
             'icon'        => 'fas fa-fw fa-shopping-cart',
             
-        ],
+        ],*/
         [
             'text'        => 'Documentos',
             'route'       => 'admin.docs.index',
-            'icon'        => 'fas fa-fw fa-file-invoice-dollar',     
-        ],
+            'icon'        => 'fas fa-fw fa-file-invoice-dollar',
+            'can'         => 'admin.documentos',     
+        ],/*
         [
             'text'        => 'Stock',
             'url'       => 'admin.stock.index',
             'icon'        => 'fas fa-fw fa-boxes',
             
-        ],
+        ],*/
         [
             'text'        => 'Asistencias',
             'route'       => 'admin.asistencias.index',
-            'icon'        => 'fas fa-tools',     
+            'icon'        => 'fas fa-tools',    
+            'can'         => 'admin.asistencias.index',
         ],
         [
             'text'        => 'Certificados',
             'route'       => 'admin.certificados.index',
             'icon'        => 'fas fa-certificate',     
+            'can'         => 'admin.certificados',
         ],
         [
             'text'        => 'Usuarios',
             'route'       => 'admin.usuarios.index',
-            'icon'        => 'fas fa-fw fa-users',   
+            'icon'        => 'fas fa-fw fa-users',
+            'can'         => 'admin.usuarios',
         ],
-
-
-        ['header' => 'account_settings'],
-        [
-            'text' => 'profile',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'change_password',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-lock',
-        ],
-   /*     [
-            'text'    => 'multilevel',
-            'icon'    => 'fas fa-fw fa-share',
-            'submenu' => [
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-                [
-                    'text'    => 'level_one',
-                    'url'     => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url'  => '#',
-                        ],
-                        [
-                            'text'    => 'level_two',
-                            'url'     => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url'  => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url'  => '#',
-                ],
-            ],
-        ], */
-    /*    ['header' => 'labels'],
-        [
-            'text'       => 'important',
-            'icon_color' => 'red',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'warning',
-            'icon_color' => 'yellow',
-            'url'        => '#',
-        ],
-        [
-            'text'       => 'information',
-            'icon_color' => 'cyan',
-            'url'        => '#',
-        ], */
     ], 
 
     /*

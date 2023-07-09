@@ -16,20 +16,18 @@ use Illuminate\Support\Facades\Auth;
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
     //if role is admin return route admin, else return route user
-    if (auth()->user()->hasRole('Cliente')) {
-        return view('cliente');
-    } else {
+
+    if(Auth::user()->hasRole('Admin')){
         return redirect()->route('admin.home');
+    }elseif(Auth::user()->hasRole('Cliente')){
+        return view('cliente');
+    }elseif(Auth::user()->hasRole('Usuario Administrativo')){
+        return redirect()->route('admin.asistencias.index');
+    }elseif(Auth::user()->hasRole('Usuario Certificados')){
+        return redirect()->route('admin.certificados.index');
+    }else{
+        return redirect()->route('login');
     }
-    //return view('welcome');
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified'
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
+
