@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title','Usuarios')
+@section('title','Usuarios Clientes')
 
 @section('content')
 
@@ -10,12 +10,12 @@
     </div>
     @endif
 
-    <h1 style="padding:7px"><i class="fas fa-book-open"></i>&nbsp;&nbsp;Usuarios</h1>
+    <h1 style="padding:7px"><i class="fas fa-fw fa-users"></i>&nbsp;&nbsp;Usuarios Clientes</h1>
     <div class="card">
 
         <div class="card-header">
 
-            {!! Form::open(['route' =>'admin.usuarios.store']) !!}
+            {!! Form::open(['route' =>'admin.usuarioscliente.store']) !!}
 
             <div class="row">
                 <div class="col">
@@ -46,6 +46,16 @@
                         {!! Form::text('pass', null, ['class' => 'form-control', 'placeholder' => 'Ingrese la contraseña']) !!}
                         <p>Longitud mínima: 8 caracteres</p>
                         @error('pass')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group" id="cliente-select">
+                        {!! Form::label('client_id', 'Cliente') !!}
+                        {!! Form::select('client_id', $clientes, null, ['class' => 'form-control', 'placeholder' => 'Seleccione un cliente']) !!}
+                        @error('client_id')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
@@ -85,20 +95,17 @@
                         </td>
                         
                         <td width="10px">
-                            <a class="btn btn-primary btn-sm" href="{{ route('admin.usuarios.edit', $usuario) }}">Editar</a>
+                            <a class="btn btn-primary btn-sm" href="{{ route('admin.usuarioscliente.edit', $usuario) }}">Editar</a>
                         </td>
                         <td width="10px">
-                            <form action="{{ route('admin.usuarios.destroy', $usuario) }}" method="POST">
+                            <form action="{{ route('admin.usuarioscliente.destroy', $usuario) }}" method="POST">
                                 @csrf
                                 @method('delete')
                                 <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
                             </form>
                         </td>
-
                     </tr>
-                    
                 @endforeach
-
             </table>
         </div>
     </div>

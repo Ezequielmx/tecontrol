@@ -69,8 +69,8 @@
                         @endforeach
                     </td>
                     <td>{{ $asistencia->client->razon_social }}</td>
-                    <td>{{ date('Y-m-d', strtotime($asistencia->fecha)) }}</td>
-                    <td>{{ $asistencia->programada? 'SI' : 'NO' }}</td>
+                    <td>{{ date('d-m-Y', strtotime($asistencia->fecha)) }}</td>
+                    <td>{{ $asistencia->programado? 'SI' : 'NO' }}</td>
                     <td>{{ $asistencia->trabajotipo->tipo }}</td>
                     <td>{{ $asistencia->horas_trabajo }}</td>
                     <td>{{ $asistencia->horas_espera }}</td>

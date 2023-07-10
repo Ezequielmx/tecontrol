@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\DocController;
 use App\Http\Controllers\Admin\PedidoController;
 use App\Http\Controllers\Admin\StockController;
 use App\Http\Controllers\Admin\TaskController;
+use App\Http\Controllers\Admin\UsuarioclienteController;
 use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\FullCalenderController;
 
@@ -34,6 +35,7 @@ Route::get('cotizaciones/{cotizacion}/print', [CotizacionController::class, 'pri
 route::resource('asistencias', AsistenciaController::class)->names('admin.asistencias')->middleware('can:admin.asistencias.index');
 route::resource('certificados', CertificadoController::class)->names('admin.certificados')->middleware('can:admin.certificados');
 route::resource('usuarios', UsuarioController::class)->names('admin.usuarios')->middleware('can:admin.usuarios');
+route::resource('usuarioscliente', UsuarioclienteController::class)->names('admin.usuarioscliente')->middleware('can:admin.usuarioscliente');
 
 route::resource('pedidos', PedidoController::class)->names('admin.pedidos');
 route::resource('stocks', StockController::class)->names('admin.stocks');
