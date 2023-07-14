@@ -13,6 +13,7 @@ use App\Models\Trabajotipo;
 use App\Models\User;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class Edit extends Component
 {
@@ -118,12 +119,13 @@ class Edit extends Component
         $this->asistencia->save();
 
         if($this->pdf){
-            $rutaReal = realpath(storage_path('app/' . $this->hojaActiva->pdf));
-            if($rutaReal && Storage::exists($rutaReal)){
+            if($this->hojaActiva->pdf){
                 Storage::delete($this->hojaActiva->pdf);
             }
 
-            $this->hojaActiva->pdf = $this->pdf->store('hojaAsistencia', 'public');
+            $nombreOriginal = $this->pdf->getClientOriginalName();
+            $carpAleat = Str::random(40); // Genera una cadena aleatoria de 40 caracteres
+            $this->hojaActiva->pdf = $this->pdf->storeAs('hojaAsistencia/' . $carpAleat, $nombreOriginal, 'public');
         }
 
         $this->hojaActiva->save();

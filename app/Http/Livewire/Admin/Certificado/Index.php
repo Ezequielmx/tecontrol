@@ -9,6 +9,7 @@ use App\Models\Asistencia;
 use App\Models\Detallehoja;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class Index extends Component
 {
@@ -26,7 +27,7 @@ class Index extends Component
     public function mount()
     {
         $this->tecnicos = User::role('Tecnico')->get();
-        $this->clients = Client::WhereHas('asistencias')->get();
+        $this->clients = Client::WhereHas('asistencias')->orderBy('razon_social')->get();
 
         if (session('desde_cert')) {
             $this->desde = session('desde_cert');
@@ -81,7 +82,8 @@ class Index extends Component
 
     //function if update $this->certpdf
 
-    public function seldet($detalle_id){
+    public function seldet($detalle_id)
+    {
         $this->detalleact_id = $detalle_id;
     }
 
@@ -92,13 +94,15 @@ class Index extends Component
         $detallehoja = Detallehoja::find($this->detalleact_id);
 
         if ($detallehoja->certpdf) {
-            $rutaReal = realpath(storage_path('app/' . $detallehoja->certpdf));
-            if ($rutaReal && Storage::exists($rutaReal)) {
-                Storage::delete($detallehoja->certpdf);
-            }
+            Storage::delete($detallehoja->certpdf);
         }
 
-        $detallehoja->certpdf = $this->certpdf->store('certificados', 'public');
+        $nombreOriginal = $this->certpdf->getClientOriginalName();
+        $carpAleat = Str::random(40); // Genera una cadena aleatoria de 40 caracteres
+
+        $detallehoja->certpdf = $this->certpdf->storeAs('certificados/' . $carpAleat, $nombreOriginal, 'public');
+
+        //$detallehoja->certpdf = $this->certpdf->store('certificados', 'public');
         $detallehoja->save();
         $this->detalleact_id = null;
     }

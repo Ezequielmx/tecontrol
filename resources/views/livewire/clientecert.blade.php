@@ -2,8 +2,8 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="row">
+                <h1 class="text-2xl font-semibold text-gray-900">{{ $cliente->razon_social }}</h1>
                 <div class="col-md-10">
-                    <h1 class="text-2xl font-semibold text-gray-900">{{ $cliente->razon_social }}</h1>
                     <div class="card">
                         <div class="card-header">
                             <div class="card-title">Certificados</div>
@@ -50,7 +50,7 @@
                                                         class="btn btn-primary btn-sm" style="padding: 2px 6px;
                                                                             margin-right: 5px;">
                                                         <i class="fa fa-download"></i> Descargar
-                                                        certificados
+                                                        certificados del mes
                                                     </button>
                                                 </div>
                                             </div>
@@ -90,7 +90,7 @@
                                                         class="btn btn-warning btn-sm" style="padding: 2px 6px;
                                                                             margin-right: 5px;">
                                                         <i class="fa fa-download"></i> Descargar
-                                                        certificados
+                                                        certificados de la hoja
                                                     </button>
                                                     @endif
                                                 </div>
@@ -121,19 +121,27 @@
                                         @endforeach
                                 </tbody>
                             </table>
-                            <br>
-                            <br>
-                            <br>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-
+                <div class="col-md-2">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Patrones</div>
+                        </div>
+                        <div class="card-body">
+                            @foreach ($anios as $anio)
+                                <!--button for download patrones from year-->
+                                <button wire:click="downlPatrones({{ $anio->anio }})"
+                                    class="btn btn-primary btn-sm" style="padding: 2px 6px; margin-right: 5px;">
+                                    <i class="fa fa-download"></i> {{ $anio->anio }}
+                                </button>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
             </div>
 
         </div>
     </div>
-
-
 </div>

@@ -14,6 +14,7 @@ class Clientecert extends Component
 {
     public $detallehojas;
     public $cliente;
+    public $anios;
 
     public function mount()
     {
@@ -21,7 +22,7 @@ class Clientecert extends Component
 
     public function render()
     {
-
+        
         $cliente = auth()->user()->client_id;
         $this->cliente = Client::find($cliente);
         $this->detallehojas = Detallehoja::with('hojasasistencia.asistencia')->whereHas('hojasasistencia', function ($query) use ($cliente) {
@@ -29,7 +30,7 @@ class Clientecert extends Component
                 $query->where('client_id', $cliente);
             });
         })
-            ->where('certpdf', '!=', null)	
+            ->where('certpdf', '!=', null)
             ->join('hojasasistencias', 'detallehojas.hojasasistencia_id', '=', 'hojasasistencias.id')
             ->join('asistencias', 'hojasasistencias.asistencia_id', '=', 'asistencias.id')
             ->select('detallehojas.id as did','detallehojas.*', 'asistencias.fecha', 'hojasasistencias.*')
@@ -37,7 +38,8 @@ class Clientecert extends Component
             ->orderBy('hojasasistencia_id')
             ->get();
 
-        
+        $this->anios = $this->cliente->patrones()->select('anio')->distinct()->orderBy('anio', 'desc')->get();
+
         return view('livewire.clientecert');
         
     }
@@ -47,7 +49,7 @@ class Clientecert extends Component
         $hojasasistencia = Hojasasistencia::with('detalles')->find($hoja_id);
 
         $zip = new ZipArchive();
-        $zipFilename = 'archivo.zip';
+        $zipFilename = 'CERTIFICIADOS_' . $hojasasistencia->nro . '.zip';
         //dd($zip->open($zipFilename, ZipArchive::CREATE | ZipArchive::OVERWRITE));
 
         if ($zip->open($zipFilename, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
@@ -57,10 +59,8 @@ class Clientecert extends Component
                 }
 
                 $rutaArchivo =  storage_path('/app/public/' . $detalle->certpdf);
-                //dd(file_exists($rutaArchivo), $detalle->certpdf, $rutaArchivo);
                 if (file_exists($rutaArchivo)) {
-                    $zip->addFile($rutaArchivo, $detalle->id . '.pdf');
-                    //dd($zip);
+                    $zip->addFile($rutaArchivo, basename($detalle->certpdf));
                 }
             }
 
@@ -92,7 +92,7 @@ class Clientecert extends Component
                 $query->where('client_id', $cliente);
             });
         })
-            ->where('certificado', 1)
+            ->where('certpdf', '!=', null)
             ->join('hojasasistencias', 'detallehojas.hojasasistencia_id', '=', 'hojasasistencias.id')
             ->join('asistencias', 'hojasasistencias.asistencia_id', '=', 'asistencias.id')
             ->select('detallehojas.id as did','detallehojas.*', 'asistencias.fecha', 'hojasasistencias.*')
@@ -101,7 +101,7 @@ class Clientecert extends Component
             ->get();
 
         $zip = new ZipArchive();
-        $zipFilename = 'archivo.zip';
+        $zipFilename = 'CERTIFICADOS_' . $anio . '_' . $mes . '.zip';
 
         if ($zip->open($zipFilename, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
             foreach ($detallehojas as $detalle) {
@@ -114,8 +114,10 @@ class Clientecert extends Component
                 }
                 $rutaArchivo =  storage_path('/app/public/' . $detalle->certpdf);
                 if (file_exists($rutaArchivo)) {
-                    $zip->addFile($rutaArchivo, $detalle->did . '.pdf');
+                    $zip->addFile($rutaArchivo, basename($detalle->certpdf));
                 }
+
+                
             }
 
             $zip->close();
@@ -123,6 +125,32 @@ class Clientecert extends Component
             return response()->download($zipFilename)->deleteFileAfterSend();
         } else {
             // Manejar el caso en el que no se pueda crear el archivo zip
+        }
+    }
+
+    public function downlPatrones($anio){
+        //create zip file with patrones->pdf files
+        $cliente = auth()->user()->client_id;
+        $patrones = $this->cliente->patrones()->where('anio', $anio)->get();
+        $zip = new ZipArchive();
+        $zipFilename = 'PATRONES_' . $anio . '.zip';
+
+        if ($zip->open($zipFilename, ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+            foreach ($patrones as $patron) {
+                if ($patron->pdf == null) {
+                    continue;
+                }
+                
+                $rutaArchivo =  storage_path('/app/public/' . $patron->pdf);
+                if (file_exists($rutaArchivo)) {
+                    $zip->addFile($rutaArchivo, basename($patron->pdf));
+                }
+            }
+
+            $zip->close();
+
+            return response()->download($zipFilename)->deleteFileAfterSend();
+        } else {
         }
     }
 }

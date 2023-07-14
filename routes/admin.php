@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\MailController;
 use App\Http\Controllers\Admin\DivisaController;
 use App\Http\Controllers\Admin\CotizacionController;
 use App\Http\Controllers\Admin\DocController;
+use App\Http\Controllers\Admin\PatroneController;
 use App\Http\Controllers\Admin\PedidoController;
 use App\Http\Controllers\Admin\StockController;
 use App\Http\Controllers\Admin\TaskController;
@@ -36,6 +37,8 @@ route::resource('asistencias', AsistenciaController::class)->names('admin.asiste
 route::resource('certificados', CertificadoController::class)->names('admin.certificados')->middleware('can:admin.certificados');
 route::resource('usuarios', UsuarioController::class)->names('admin.usuarios')->middleware('can:admin.usuarios');
 route::resource('usuarioscliente', UsuarioclienteController::class)->names('admin.usuarioscliente')->middleware('can:admin.usuarioscliente');
+route::resource('patrones', PatroneController::class)->names('admin.patrones')->middleware('can:patrones');
+
 
 route::resource('pedidos', PedidoController::class)->names('admin.pedidos');
 route::resource('stocks', StockController::class)->names('admin.stocks');

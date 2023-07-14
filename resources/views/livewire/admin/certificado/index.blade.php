@@ -78,14 +78,14 @@
                                             <!-- input for fecha borrador -->
                                             <input type="date" class="form-control"
                                                 wire:change="changeVal({{ $detalle->id }}, 'fechaborrador' ,$event.target.value)"
-                                                value={{ $detalle->fechaborrador }}
+                                                value='{{ $detalle->fechaborrador }}' 
                                             style="font-size: 12px; padding: 0px 2px; height: 30px;">
                                         </td>
                                         <td>
                                             <!-- input for fecha envio cliente -->
                                             <input type="date" class="form-control"
                                                 wire:change="changeVal({{ $detalle->id }}, 'fechacliente' ,$event.target.value)"
-                                                value={{ $detalle->fechacliente }}
+                                                value='{{ $detalle->fechacliente }}' 
                                             style="font-size: 12px; padding: 0px 2px; height: 30px;">
                                         </td>
                                         <td>

@@ -420,6 +420,12 @@ return [
             'icon'        => 'fas fa-fw fa-users',
             'can'         => 'admin.usuarioscliente',
         ],
+        [
+            'text'        => 'Patrones',
+            'route'       => 'admin.patrones.index',
+            'icon'        => 'fas fa-ruler-combined',
+            'can'         => 'patrones',
+        ],
     ], 
 
     /*

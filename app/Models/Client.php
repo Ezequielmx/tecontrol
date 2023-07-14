@@ -46,4 +46,9 @@ class Client extends Model
     {
         return $this->hasMany('App\Models\Asistencia');
     }
+
+    public function patrones()
+    {
+        return $this->hasMany('App\Models\Patrone');
+    }
 }
