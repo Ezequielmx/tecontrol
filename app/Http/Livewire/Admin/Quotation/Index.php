@@ -7,6 +7,7 @@ use App\Models\Quotation;
 use App\Models\QuotationState;
 use Livewire\Component;
 use App\Models\QuotationPriority;
+use App\Models\QuotationDetail;
 
 class Index extends Component
 {
@@ -22,6 +23,7 @@ class Index extends Component
     protected $listeners = ['deleteCotizacion'];
     
     public function mount($cliente_id = null){
+        
         if($cliente_id){
             $this->cliente_id = $cliente_id;
         }

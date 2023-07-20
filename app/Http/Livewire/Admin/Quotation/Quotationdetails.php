@@ -14,18 +14,19 @@ class Quotationdetails extends Component
     public $quotationDetails;
     public $products;
     public $currencies;
+    public $searchTerm;
 
     protected $listeners = ['render', 'deleteDetalle', 'deleteProds'];
 
 
     public function mount(Quotation $quotation){
         $this->quotation = $quotation;
-        $this->products = Product::all();
         $this->currencies = Currency::all();
     }
 
     public function render()
     {
+        $this->products = Product::with('moneda')->search($this->searchTerm)->orderBy('descripcion_cotizacion')->get();
         $this->quotationDetails = QuotationDetail::where('quotation_id', $this->quotation->id)->get();
         return view('livewire.admin.quotation.quotationdetails');
     }

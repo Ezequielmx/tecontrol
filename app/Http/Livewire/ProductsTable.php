@@ -87,21 +87,21 @@ class ProductsTable extends Component
             'proveedor' => $this->nSupplierId,
             'moneda' => $this->nCurrencyId,
             'categoria' => $this->nCategoryId,
-            'precio_compra' => $this->nPurchasePrice,
-            'precio_venta' =>  $this->nSalePrice,
+            'precio_compra' => floatval($this->nPurchasePrice), 
+            'precio_venta' =>  floatval($this->nSalePrice),
             'punto_pedido' => $this->nReorderPoint,
             'stock_inicial' => $this->nInitialStock,
         ]);
 
         $this->nRequisitionDescription = '';
         $this->nQuotationDescription = '';
-        $this->nSupplierId = '';
-        $this->nCurrencyId = '';
-        $this->nCategoryId = '';
-        $this->nPurchasePrice = '';
-        $this->nSalePrice = '';
-        $this->nReorderPoint = '';
-        $this->nInitialStock = '';
+        $this->nSupplierId = null;
+        $this->nCurrencyId = null;
+        $this->nCategoryId = null;
+        $this->nPurchasePrice = null;
+        $this->nSalePrice = null;
+        $this->nReorderPoint = null;
+        $this->nInitialStock = null;
         
         session()->flash('message', 'Producto agregado correctamente.');
 

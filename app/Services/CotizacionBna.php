@@ -5,16 +5,15 @@ namespace App\Services;
 use GuzzleHttp\Client;
 use stdClass;
 use App\Models\Currency;
+use App\Models\QuotationDetail;
 
 class CotizacionBna
 {
     public function getCotiz()
     {
-        $con = false;
+        $con = true;
 
         if ($con) {
-
-
             $client = new Client();
             $response = $client->request('GET', 'https://www.bna.com.ar/Personas');
             $html = (string)$response->getBody();
@@ -61,6 +60,17 @@ class CotizacionBna
             $cotizaciones->euroDivisaCompra = doubleval($euroDivisaCompra);
             $cotizaciones->euroDivisaVenta = doubleval($euroDivisaVenta);
 
+            $val = (
+                $cotizaciones->dolarCompra != Currency::find(1)->compra ||
+                $cotizaciones->dolarVenta != Currency::find(1)->venta ||
+                $cotizaciones->euroCompra != Currency::find(2)->compra ||
+                $cotizaciones->euroVenta != Currency::find(2)->venta ||
+                $cotizaciones->dolarDivisaCompra != Currency::find(1)->divisacompra ||
+                $cotizaciones->dolarDivisaVenta != Currency::find(1)->divisaventa ||
+                $cotizaciones->euroDivisaCompra != Currency::find(2)->divisacompra ||
+                $cotizaciones->euroDivisaVenta != Currency::find(2)->divisaventa
+            );
+
             if (
                 $cotizaciones->dolarCompra != Currency::find(1)->compra ||
                 $cotizaciones->dolarVenta != Currency::find(1)->venta ||
@@ -84,6 +94,8 @@ class CotizacionBna
                     'divisacompra' => $cotizaciones->euroDivisaCompra,
                     'divisaventa' => $cotizaciones->euroDivisaVenta,
                 ]);
+
+                QuotationDetail::updateAllCot();
             }
             return $cotizaciones;
         } else {
