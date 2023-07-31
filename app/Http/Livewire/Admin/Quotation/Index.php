@@ -8,10 +8,13 @@ use App\Models\QuotationState;
 use Livewire\Component;
 use App\Models\QuotationPriority;
 use App\Models\QuotationDetail;
+use Livewire\WithPagination;
 
 class Index extends Component
 {
-    public $cotizaciones;
+    use WithPagination;
+    protected $paginationTheme = 'bootstrap';
+
     public $cliente_id;
     public $finalizadas = false;
     public $clients;
@@ -36,26 +39,22 @@ class Index extends Component
     }
     public function render()
     {   
-        $this->cotizaciones = Quotation::orderBy('fecha');
 
-        if($this->cliente_id){
-            $this->cotizaciones = $this->cotizaciones->where('client_id', $this->cliente_id);
-        }
+        $cotizaciones = Quotation::orderBy('fecha', 'desc')
+        ->when($this->cliente_id, function ($query) {
+            return $query->where('client_id', $this->cliente_id);
+        })
+        ->when($this->estado_id, function ($query) {
+            return $query->where('quotation_state_id', $this->estado_id);
+        })
+        ->when($this->prioridad_id, function ($query) {
+            return $query->where('quotation_priority_id', $this->prioridad_id);
+        })
+        ->when(!$this->finalizadas, function ($query) {
+            return $query->where('quotation_state_id', '<', 5);
+        })
+        ->paginate(50); 
 
-        if($this->estado_id){
-            $this->cotizaciones = $this->cotizaciones->where('quotation_state_id', $this->estado_id);
-        }
-
-        if($this->prioridad_id){
-            $this->cotizaciones = $this->cotizaciones->where('quotation_priority_id', $this->prioridad_id);
-        }
-
-        if(!$this->finalizadas){
-            $this->cotizaciones = $this->cotizaciones->where('quotation_state_id', '<', 5);
-        }
-
-        
-        $this->cotizaciones = $this->cotizaciones->get();
         $this->clients = Client::whereHas('quotations')->get();
         $this->quotationStates = QuotationState::all();
         $this->quotationPriorities = QuotationPriority::all();
@@ -68,7 +67,7 @@ class Index extends Component
         ]);
 
 
-        return view('livewire.admin.quotation.index');
+        return view('livewire.admin.quotation.index', compact('cotizaciones'));
     }
 
     public function deleteCotizacion($id){

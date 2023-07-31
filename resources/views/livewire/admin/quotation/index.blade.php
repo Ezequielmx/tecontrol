@@ -96,12 +96,16 @@
                         <!-- a href print button with pdf icon-->
                         <a href="{{ route('admin.cotizaciones.print', $cotizacion) }}" target="_blank"
                             class="btn btn-secondary"><i class="fa fa-file-pdf"></i></a>
-
                     </td>
                 </tr>
                 @endforeach
             </table>
         </div>
+        <!--pagination-->
+        <div class="card-footer">
+            {{ $cotizaciones->links() }}
+        </div>
+            
     </div>
     <div wire:loading>
         <div class="modload">

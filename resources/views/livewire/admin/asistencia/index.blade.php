@@ -75,9 +75,11 @@
                     <td>{{ $asistencia->horas_trabajo }}</td>
                     <td>{{ $asistencia->horas_espera }}</td>
                     <td>{{ $asistencia->tecnicos->count() }}</td>
-                    <td>
+                    <td style="white-space: nowrap">
                         <a href="{{ route('admin.asistencias.edit', $asistencia) }}"
                             class="btn btn-primary btn-sm">Editar</a>
+                        <button wire:click="$emit('deleteAsis',{{ $asistencia->id }})"
+                            class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
                     </td>
                 </tr>
                 @endforeach

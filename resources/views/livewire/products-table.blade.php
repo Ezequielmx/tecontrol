@@ -22,16 +22,10 @@
         <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr class="text-center">
-                    <th style="width: 25%;">Descripción Pedido</th>
-                    <th style="width: 25%;">Descripción Cotización</th>
-                    <th style="width: 10%;">Proveedor</th>
-                    <th style="width: 10%;">Categoría</th>
-                    <th style="width: 5%;">Moneda</th>
-                    <th style="width: 10%;">Precio Compra</th>
-                    <th style="width: 10%;">Precio Venta</th>
-                    <th style="width: 5%;">Punto Pedido</th>
-                    <th style="width: 5%;">Stock Inicial</th>
-                    <th style="width: 5%;">Acciones</th>
+                    <th style="width: 30%;">Descripción Pedido</th>
+                    <th style="width: 30%;">Descripción Cotización</th>
+                    <th style="width: 20%;">Proveedor</th>
+                    <th style="width: 20%;">Categoría</th>
                 </tr>
             </thead>
             <tbody>
@@ -66,6 +60,22 @@
                             @endforeach
                         </select>
                     </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr class="text-center">
+                    <th style="width: 20%;">Moneda</th>
+                    <th style="width: 25%;">Precio Compra</th>
+                    <th style="width: 25%;">Precio Venta</th>
+                    <th style="width: 10%;">Punto Pedido</th>
+                    <th style="width: 10%;">Stock Inicial</th>
+                    <th style="width: 10%;">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
                     <td>
                         <select class="form-control" wire:model.defer="nCurrencyId" id="currencyId">
                             <option value="">Seleccione...</option>

@@ -1,6 +1,4 @@
 @extends('adminlte::page')
-@livewireScripts
-@livewireStyles
 
 @section('title', 'Productos')
 
@@ -15,5 +13,3 @@
 @section('css')
 <link rel="stylesheet" href="{{ asset('admin.css') }}">
 @stop
-
-@livewireScripts

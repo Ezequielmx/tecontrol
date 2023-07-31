@@ -19,6 +19,9 @@ class Index extends Component
     public $hasta;
     public $hojanro;
 
+    protected $listeners = ['deleteAsistencia'];
+
+
     public function mount()
     {
         $this->clients = Client::WhereHas('asistencias')->get();
@@ -76,5 +79,10 @@ class Index extends Component
         );
 
         return view('livewire.admin.asistencia.index');
+    }
+
+    public function deleteAsistencia($id){
+        $asistencia = Asistencia::find($id);
+        $asistencia->delete();
     }
 }
