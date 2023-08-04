@@ -23,10 +23,13 @@ class Index extends Component
     public $quotationPriorities;
     public $prioridad_id;
 
+    public $selected_id;
+    public $quotationDetails;
+
     protected $listeners = ['deleteCotizacion'];
     
     public function mount($cliente_id = null){
-        
+        $this->quotationDetails = [];
         if($cliente_id){
             $this->cliente_id = $cliente_id;
         }
@@ -55,7 +58,7 @@ class Index extends Component
         })
         ->paginate(50); 
 
-        $this->clients = Client::whereHas('quotations')->get();
+        $this->clients = Client::whereHas('quotations')->orderby('razon_social')->get();
         $this->quotationStates = QuotationState::all();
         $this->quotationPriorities = QuotationPriority::all();
 
@@ -80,5 +83,12 @@ class Index extends Component
         $this->estado_id = null;
         $this->prioridad_id = null;
         $this->finalizadas = false;
+    }
+
+    public function selCot($id){
+
+        $this->selected_id == $id? $this->selected_id = null : $this->selected_id = $id;
+        $this->quotationDetails = QuotationDetail::where('quotation_id', $id)->get();
+        //dd($this->quotationDetails);	
     }
 }

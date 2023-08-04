@@ -67,6 +67,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>id</th>
                         <th>Fecha</th>
                         <th>Tiempo</th>
@@ -79,7 +80,10 @@
                     </tr>
                 </thead>
                 @foreach ($cotizaciones as $cotizacion)
-                <tr>
+                <tr wire:click='selCot({{ $cotizacion->id }})'>
+                    <td>
+                        <button class="btn btn-default btn-xs"><i class="fa-regular fa-eye"></i></button>
+                    </td>
                     <td>{{ $cotizacion->id }}</td>
                     <td>{{ date('d/m/Y', strtotime($cotizacion->fecha)) }}</td>
                     <td>{{ intval((time() - strtotime($cotizacion->fecha)) / 86400) }} días</td>
@@ -98,6 +102,62 @@
                             class="btn btn-secondary"><i class="fa fa-file-pdf"></i></a>
                     </td>
                 </tr>
+                <tr></tr>
+                <tr class={{ ($selected_id==$cotizacion->id)? '' : 'hiddenRow' }}>
+                    <td></td>
+                    <td colspan="9" >
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Producto</th>
+                                    <th style="width: 10%">Precio Unit</th>
+                                    <th>Moneda</th>
+                                    <th>Cotizacion</th>
+                                    <th>Precio Ars</th>
+                                    <th>Cantidad</th>
+                                    <th>Subtotal</th>
+                                    <th>Facturado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($quotationDetails as $detalle)
+                                <tr>
+                                    <td>
+                                        {{ $detalle->product->descripcion_cotizacion }}
+                                    </td>
+                                    <td style="min-width: 180px;">
+                                        $ {{ number_format($detalle->precio,2,",",".") }}
+                                    </td>
+                                    <td style="white-space: nowrap; text-align:center">
+                                        {{ $detalle->currency->moneda}}
+                                    </td>
+                                    <td style="white-space: nowrap; text-align:end">
+                                        {{ $detalle->cotizacion }}
+                                    </td>
+                                    <td style="white-space: nowrap; text-align:end">
+                                        $ {{ number_format($detalle->precio * $detalle->cotizacion,2,",",".") }}
+                                    </td>
+                                    <td style="width: 1%">
+                                        {{ $detalle->cantidad }}
+                                    </td>
+                                    <td style="white-space: nowrap; text-align:end">
+                                        $ {{ number_format($detalle->precio * $detalle->cotizacion *
+                                        $detalle->cantidad,2,",",".")}}
+                                    </td>
+
+                                    <td style="width: 1%">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-control" {{ $detalle->facturado?
+                                            'checked' : '' }}
+                                            style="width:50%" disabled>
+                                        </div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
                 @endforeach
             </table>
         </div>
@@ -105,7 +165,7 @@
         <div class="card-footer">
             {{ $cotizaciones->links() }}
         </div>
-            
+
     </div>
     <div wire:loading>
         <div class="modload">

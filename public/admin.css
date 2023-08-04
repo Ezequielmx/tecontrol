@@ -77,3 +77,9 @@ td, th{
         transform: scale(1) translateY(0)
     }
 }
+
+.hiddenRow {
+    display: none !important;
+    padding: 0 !important;
+}
+
