@@ -68,6 +68,7 @@ class Edit extends Component
     public function render()
     {
         $this->contacts = $this->quotation->client_id ? Client::find($this->quotation->client_id)->client : [];
+        $this->quotation->condicion = $this->quotation->client_id ? Client::find($this->quotation->client_id)->condicion : '';
         
         $this->calcTotal();
 
@@ -79,7 +80,7 @@ class Edit extends Component
         $this->quotationStates = QuotationState::all();
         $this->quotationPriorities = QuotationPriority::all();
         $this->quotationTypes = QuotationType::all();
-        $this->clients = Client::all();
+        $this->clients = Client::orderby('razon_social')->get();
     }
 
     public function calcTotal($cambioFact = false){

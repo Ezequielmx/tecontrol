@@ -66,7 +66,7 @@ class Create extends Component
         $this->quotationStates = QuotationState::all();
         $this->quotationPriorities = QuotationPriority::all();
         $this->quotationTypes = QuotationType::all();
-        $this->clients = Client::all();
+        $this->clients = Client::orderby('razon_social')->get();
         $this->products = Product::all();
         $this->currencies = Currency::all();
 

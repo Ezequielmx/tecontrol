@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
 @php
-    setlocale(LC_TIME, "spanish");
+setlocale(LC_TIME, "spanish");
 @endphp
+
 <head>
     <title>Cotización {{ $quotation->nro }}</title>
     <style>
@@ -192,6 +193,18 @@
                 @php
                 $num=1;
                 $total=0;
+                $simb = '$';
+                switch ($quotation->quotationDetails->first()->currency_id) {
+                case 1:
+                $simb = 'USD';
+                break;
+                case 2:
+                $simb = '€';
+                break;
+                default:
+                $simb = '$';
+                break;
+                }
                 @endphp
                 @foreach ($quotation->quotationDetails as $detalle)
                 <tr>
@@ -199,9 +212,10 @@
                     <td class="tds" style="width: 5%; text-align:center;">{{ $detalle->cantidad }}</td>
                     <td class="tds" style="width: 46%">{{ $detalle->product->descripcion_cotizacion }}</td>
                     <td class="tds" style="width: 12%; text-align:center">{{ $detalle->currency->moneda}}</td>
-                    <td class="tds" style="width: 16%; text-align:right">$ {{ number_format($detalle->precio,2,",",".") }}</td>
-                    <td class="tds" style="width: 16%; text-align:right">$ {{ number_format($detalle->precio *
-                        $detalle->cantidad,2,",",".") }}</td>
+                    <td class="tds" style="width: 16%; text-align:right">{{$simb . ' ' .
+                        number_format($detalle->precio,2,",",".") }}</td>
+                    <td class="tds" style="width: 16%; text-align:right">{{$simb . ' ' . number_format($detalle->precio
+                        * $detalle->cantidad,2,",",".") }}</td>
                 </tr>
                 @php
                 $total += $detalle->precio * $detalle->cantidad;
@@ -211,24 +225,30 @@
                     <td class="tds" style="background-color: white;"></td>
                     <td class="tds" style="background-color: white;"></td>
                     <td class="tds" style="background-color: white;"></td>
-                    <td class="tds" style="background-color: gray; font-weight: bold; color: white; font-size: 13px; border: 1px solid gray">Total</td>
-                    <td class="tds" style="text-align:center; font-weight: bold; font-size: 13px; border: 1px solid gray">{{
+                    <td class="tds"
+                        style="background-color: gray; font-weight: bold; color: white; font-size: 13px; border: 1px solid gray">
+                        Total</td>
+                    <td class="tds"
+                        style="text-align:center; font-weight: bold; font-size: 13px; border: 1px solid gray">{{
                         $quotation->quotationDetails->first()->currency->moneda}}</td>
-                    <td class="tds" style="text-align:right; text-align:right; font-weight: bold; font-size: 13px; border: 1px solid gray">$ {{ number_format($total,2,",",".") }}</td>
+                    <td class="tds"
+                        style="text-align:right; text-align:right; font-weight: bold; font-size: 13px; border: 1px solid gray">
+                        {{$simb . ' ' .  number_format($total,2,",",".") }}</td>
                 </tr>
             </tbody>
         </table>
         @if ($quotation->nota)
-            <h3 style="text-decoration: underline;"><b>NOTA:</b></h3>
-            <p>
-                {{ $quotation->nota }}
-            </p>    
+        <h3 style="text-decoration: underline;"><b>NOTA:</b></h3>
+        <p>
+            {{ $quotation->nota }}
+        </p>
         @endif
-        
+
         <h3 style="text-decoration: underline;"><b>CONDICIONES COMERCIALES:</b></h3>
         <ul>
             <li> {{ $quotation->quotationDetails->first()->currency->textoNota }}</li>
-            <li> POR LA EVENTUAL DIFERENCIA DE CAMBIO EN +/- 5% A LA FECHA DE EFECTIVO EL PAGO, SE EMITIRA NOTA DE DEBITO O NOTA DE CREDITO SEGÚN CORRESPONDA.</li>
+            <li> POR LA EVENTUAL DIFERENCIA DE CAMBIO EN +/- 5% A LA FECHA DE EFECTIVO EL PAGO, SE EMITIRA NOTA DE
+                DEBITO O NOTA DE CREDITO SEGÚN CORRESPONDA.</li>
         </ul>
 
         <table>
@@ -251,12 +271,12 @@
         </table>
 
         <p><b>Sin otro particular, aprovechamos la ocasión para saludarlo muy atentamente y quedamos a su
-            disposición ante eventuales consultas.</b></p>
+                disposición ante eventuales consultas.</b></p>
 
         <span>Martín Yakisich</span><br>
         <span>DPTO. TECNICO</span><br>
         <span>RPG4b Rv. 01</span>
-            
+
     </div>
 </body>
 
