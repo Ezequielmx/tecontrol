@@ -31,7 +31,8 @@
             <div class="icon">
                 <i class="fas fa-fw fa-dollar-sign "></i>
             </div>
-            <a href="https://www.bna.com.ar/Personas" target="_blank" class="small-box-footer">MONEDAS - Cotizacion BNA <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="https://www.bna.com.ar/Personas" target="_blank" class="small-box-footer">MONEDAS - Cotizacion BNA
+                <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <!-- ./col -->
@@ -59,15 +60,20 @@
             <div class="icon">
                 <i class="fas fa-fw fa-dollar-sign "></i>
             </div>
-            <a href="https://www.bna.com.ar/Personas#divisas" target="_blank" class="small-box-footer">DIVISAS - Cotizacion BNA <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="https://www.bna.com.ar/Personas#divisas" target="_blank" class="small-box-footer">DIVISAS -
+                Cotizacion BNA <i class="fas fa-arrow-circle-right"></i></a>
         </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        @livewire('admin.cotiz-graf')
     </div>
 </div>
 
 @stop
 
 @section('css')
-<link rel="stylesheet" href="/css/admin_custom.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 <!-- Ionicons -->
 <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -82,5 +88,115 @@
 
 @section('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+
+<script>
+    setTimeout(function () {
+        var estadosIni = @json($estadosIni);
+        var totalesIni = @json($totalesIni);
+        var coloresIni = @json($coloresIni);
+        Livewire.emit('graph', estadosIni, totalesIni, coloresIni);
+
+        var estadosPie = @json($estadosPie);
+        var totalesPie = @json($cantPie);
+        var coloresPie = @json($coloresPie);
+        Livewire.emit('graph2', estadosPie, totalesPie, coloresPie);
+    }, 100);
+    
+    Livewire.on('graph', function(estados, datTotales, colores){
+        const totales = [];
+        datTotales.forEach(myFunction);
+        function myFunction(item) {
+            totales.push(parseInt(item));
+        }
+
+        const coloresBarras = ['#c5e0b4', '#ff5050','#e6e396','#5b9bd5','#317775','#92d050', '#373837'];
+
+        Highcharts.chart('container-graph', {
+            chart: {
+                type: 'bar'
+            },
+            
+            title: {
+                text: ''
+            },
+            xAxis: {
+                categories: estados
+            },
+            yAxis: {
+                title: {
+                    text: ''
+                }
+            },
+            plotOptions: {
+                series: {
+                    stacking: 'normal',
+                    dataLabels: {
+                    enabled: true,
+                    }
+                },
+                
+            },
+            legend: {
+                enabled: false
+            },
+            series: [{
+                name: 'Totales',
+                data: totales,
+                colorByPoint: true,
+                colors: colores
+            }]
+        });
+    });
+
+    Livewire.on('graph2', function(estadosPie, totalesPie, coloresPie){
+        const totales = [];
+        totalesPie.forEach(myFunction);
+        function myFunction(item) {
+            totales.push(parseInt(item));
+        }
+
+        Highcharts.chart('container-graph2', {
+            chart: {
+                type: 'pie'
+            },
+            
+            title: {
+                text: ''
+            },
+            tooltip: {
+                pointFormat: '<b>{point.name}: {point.y} </b> '
+            },
+            accessibility: {
+                point: {
+                    valueSuffix: '%'
+                }
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}: {point.y}</b> <br>({point.percentage:.1f}%)'
+                    }
+                }
+            },
+            series: [{
+        name: 'Porcentaje',
+        colorByPoint: true,
+        colors: coloresPie,
+        data: estadosPie.map(function (estado, index) {
+            return {
+                name: estado,
+                y: totales[index]
+            };
+        })
+    }]
+        });
+    });
+
+</script>
 
 @stop
