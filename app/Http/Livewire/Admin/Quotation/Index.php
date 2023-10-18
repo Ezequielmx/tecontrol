@@ -15,6 +15,7 @@ class Index extends Component
     use WithPagination;
     protected $paginationTheme = 'bootstrap';
 
+    public $quot_nro;
     public $cliente_id;
     public $finalizadas = false;
     public $clients;
@@ -44,6 +45,9 @@ class Index extends Component
     {   
 
         $cotizaciones = Quotation::orderBy('fecha', 'desc')
+        ->when($this->quot_nro, function ($query) {
+            return $query->where('nro', $this->quot_nro);
+        })
         ->when($this->cliente_id, function ($query) {
             return $query->where('client_id', $this->cliente_id);
         })
@@ -83,6 +87,7 @@ class Index extends Component
         $this->estado_id = null;
         $this->prioridad_id = null;
         $this->finalizadas = false;
+        $this->quot_nro = null;
     }
 
     public function selCot($id){

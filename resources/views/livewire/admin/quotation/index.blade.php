@@ -2,6 +2,12 @@
     <div class="card">
         <div class="card-body">
             <div class="row" style="align-items: center;">
+                <div class="col col-md-1">
+                    <div class="form-group">
+                        <label for="quot_nro">N° Cotiz.</label>
+                        <input type="text" wire:model="quot_nro" class="form-control">
+                    </div>
+                </div>
                 <div class="col col-md-2">
                     <!--client select-->
                     <div class="form-group">

@@ -328,6 +328,12 @@ return [
             'icon'        => 'fas fa-tachometer-alt',
             'can'         => 'admin.home',  
         ],
+        [
+            'text' => 'Tablero',
+            'route'=> 'admin.tablero.index',
+            'icon' => 'fas fa-table',
+
+        ],
         /*
         [
             'text'        => 'Calendario',

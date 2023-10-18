@@ -83,3 +83,17 @@ td, th{
     padding: 0 !important;
 }
 
+
+.sortable-list{
+    cursor: move;
+    list-style: none;
+    padding: 0;
+}
+
+.quotation-card{
+    border: 1px solid #eaeaea;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+

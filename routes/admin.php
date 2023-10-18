@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Admin\UsuarioclienteController;
 use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\FullCalenderController;
+use App\Http\Controllers\TableroController;
 
 route::get('', [HomeController::class, 'index'])->name('admin.home')->middleware('can:admin.home');
 
@@ -38,6 +39,7 @@ route::resource('certificados', CertificadoController::class)->names('admin.cert
 route::resource('usuarios', UsuarioController::class)->names('admin.usuarios')->middleware('can:admin.usuarios');
 route::resource('usuarioscliente', UsuarioclienteController::class)->names('admin.usuarioscliente')->middleware('can:admin.usuarioscliente');
 route::resource('patrones', PatroneController::class)->names('admin.patrones')->middleware('can:patrones');
+route::resource('tablero', TableroController::class)->names('admin.tablero');
 
 
 route::resource('pedidos', PedidoController::class)->names('admin.pedidos');
