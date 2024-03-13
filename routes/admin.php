@@ -9,7 +9,6 @@ use App\Http\Controllers\Admin\ProductoController;
 use App\Http\Controllers\Admin\ClienteController;
 use App\Http\Controllers\Admin\ProveedorController;
 use App\Http\Controllers\Admin\MailController;
-use App\Http\Controllers\Admin\DivisaController;
 use App\Http\Controllers\Admin\CotizacionController;
 use App\Http\Controllers\Admin\DocController;
 use App\Http\Controllers\Admin\PatroneController;
@@ -20,6 +19,7 @@ use App\Http\Controllers\Admin\UsuarioclienteController;
 use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\FullCalenderController;
 use App\Http\Controllers\TableroController;
+use App\Http\Controllers\Admin\DashcertController;
 
 route::get('', [HomeController::class, 'index'])->name('admin.home')->middleware('can:admin.home');
 
@@ -40,7 +40,7 @@ route::resource('usuarios', UsuarioController::class)->names('admin.usuarios')->
 route::resource('usuarioscliente', UsuarioclienteController::class)->names('admin.usuarioscliente')->middleware('can:admin.usuarioscliente');
 route::resource('patrones', PatroneController::class)->names('admin.patrones')->middleware('can:patrones');
 route::resource('tablero', TableroController::class)->names('admin.tablero');
-
+Route::resource('dashcert', DashcertController::class)->names('admin.dashcert');
 
 route::resource('pedidos', PedidoController::class)->names('admin.pedidos');
 route::resource('stocks', StockController::class)->names('admin.stocks');

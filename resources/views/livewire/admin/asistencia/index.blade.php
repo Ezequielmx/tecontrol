@@ -62,7 +62,7 @@
                 </thead>
                 @foreach ($asistencias as $asistencia)
                 <tr>
-                    <td>{{ $asistencia->id }}</td>
+                    <td>{{ $asistencia->nro }}</td>
                     <td>
                         @foreach ($asistencia->hojas as $hoja)
                         {{ $hoja->nro }}<br>

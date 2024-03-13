@@ -323,17 +323,31 @@ return [
         ],*/
 
         [
-            'text'        => 'Home',
-            'url'         => 'admin',
-            'icon'        => 'fas fa-tachometer-alt',
+            'text'    => 'Home',
+            'icon'    => 'fas fa-tachometer-alt',
+            'submenu' => [
+                [
+                    'text'        => 'Monedas - Cotizaciones',
+                    'url'         => 'admin',
+                    'icon'        => 'fas fa-tachometer-alt',
+                    'can'         => 'admin.home',  
+                ],
+                [
+                    'text'        => 'Dash Certific',
+                    'route'       => 'admin.dashcert.index',
+                    'icon'        => 'fas fa-tachometer-alt',
+                    'can'         => 'admin.certificados',
+                ],
+            ],
             'can'         => 'admin.home',  
         ],
+        /*
         [
             'text' => 'Tablero',
             'route'=> 'admin.tablero.index',
             'icon' => 'fas fa-table',
 
-        ],
+        ],*/
         /*
         [
             'text'        => 'Calendario',
