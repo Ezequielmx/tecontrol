@@ -329,13 +329,19 @@ return [
                 [
                     'text'        => 'Monedas - Cotizaciones',
                     'url'         => 'admin',
-                    'icon'        => 'fas fa-tachometer-alt',
+                    'icon'        => 'fas fa-chevron-circle-right',
                     'can'         => 'admin.home',  
+                ],
+                [
+                    'text'        => 'Dash Asistencias',
+                    'route'       => 'admin.dashasist.index',
+                    'icon'        => 'fas fa-chevron-circle-right',
+                    'can'         => 'admin.home',
                 ],
                 [
                     'text'        => 'Dash Certific',
                     'route'       => 'admin.dashcert.index',
-                    'icon'        => 'fas fa-tachometer-alt',
+                    'icon'        => 'fas fa-chevron-circle-right',
                     'can'         => 'admin.certificados',
                 ],
             ],

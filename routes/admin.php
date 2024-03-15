@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ClienteController;
 use App\Http\Controllers\Admin\ProveedorController;
 use App\Http\Controllers\Admin\MailController;
 use App\Http\Controllers\Admin\CotizacionController;
+use App\Http\Controllers\Admin\DashasistController;
 use App\Http\Controllers\Admin\DocController;
 use App\Http\Controllers\Admin\PatroneController;
 use App\Http\Controllers\Admin\PedidoController;
@@ -41,6 +42,7 @@ route::resource('usuarioscliente', UsuarioclienteController::class)->names('admi
 route::resource('patrones', PatroneController::class)->names('admin.patrones')->middleware('can:patrones');
 route::resource('tablero', TableroController::class)->names('admin.tablero');
 Route::resource('dashcert', DashcertController::class)->names('admin.dashcert');
+Route::resource('dashasist', DashasistController::class)->names('admin.dashasist');
 
 route::resource('pedidos', PedidoController::class)->names('admin.pedidos');
 route::resource('stocks', StockController::class)->names('admin.stocks');
