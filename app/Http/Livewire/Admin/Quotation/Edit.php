@@ -60,10 +60,11 @@ class Edit extends Component
         'quotation.lugarEntrega' => 'nullable',
         'quotation.nota' => 'nullable',
         'quotation.fechaContacto' => 'nullable',
-        'quotation.detalleContacto' => 'nullable'
+        'quotation.detalleContacto' => 'nullable',
+
+        'quotation.nroPedido' => 'nullable',
     ];
 
-    
 
     public function render()
     {

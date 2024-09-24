@@ -74,6 +74,10 @@ class Index extends Component
 
     public function changeVal(Detallehoja $detallehoja, $field, $value)
     {
+        //if value "" then null
+        if ($value == "") {
+            $value = null;
+        }
         $detallehoja->$field = $value;
         $detallehoja->save();
         $this->asistencias = $this->asistencias->fresh();

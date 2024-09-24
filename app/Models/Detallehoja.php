@@ -35,4 +35,8 @@ class Detallehoja extends Model
     public function client(){
         return $this->asistencia->client();
     }
+
+    public function sector(){
+        return $this->hasOne('App\Models\ClientsSector', 'id', 'clientssector_id');
+    }
 }

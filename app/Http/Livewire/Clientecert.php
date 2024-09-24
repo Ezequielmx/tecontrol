@@ -15,6 +15,9 @@ class Clientecert extends Component
     public $detallehojas;
     public $cliente;
     public $anios;
+    public $sectores;
+    public $sector_id;
+    public $search;
 
     public function mount()
     {
@@ -25,6 +28,7 @@ class Clientecert extends Component
         
         $cliente = auth()->user()->client_id;
         $this->cliente = Client::find($cliente);
+        $this->sectores = $this->cliente->sectors()->get();
         $this->detallehojas = Detallehoja::with('hojasasistencia.asistencia')->whereHas('hojasasistencia', function ($query) use ($cliente) {
             $query->whereHas('asistencia', function ($query) use ($cliente) {
                 $query->where('client_id', $cliente);
@@ -37,6 +41,21 @@ class Clientecert extends Component
             ->orderBy('asistencias.fecha', 'desc')
             ->orderBy('hojasasistencia_id')
             ->get();
+
+        //if sector_id is selected filter only the detallehojas thas have clientessector_id = sector_id
+
+        if($this->sector_id != null){
+            $this->detallehojas = $this->detallehojas->filter(function ($detallehoja) {
+                return $detallehoja->clientssector_id == $this->sector_id;
+            });
+        }
+
+        //if search is not empty filter only the detallehojas thas detalle contains the search string
+        if($this->search != null){
+            $this->detallehojas = $this->detallehojas->filter(function ($detallehoja) {
+            return stripos(strtolower($detallehoja->detalle), strtolower($this->search)) !== false;
+            });
+        }
 
         $this->anios = $this->cliente->patrones()->select('anio')->distinct()->orderBy('anio', 'desc')->get();
 
@@ -152,5 +171,10 @@ class Clientecert extends Component
             return response()->download($zipFilename)->deleteFileAfterSend();
         } else {
         }
+    }
+
+    public function clear()
+    {
+        $this->search = '';
     }
 }

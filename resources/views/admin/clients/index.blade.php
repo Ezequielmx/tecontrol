@@ -29,13 +29,4 @@
 @section('js')
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script>
-    Livewire.on('clientDirty', () => {
-                Swal.fire(
-                    'Good job!',
-                    'You clicked the button!',
-                    'success'
-                )});
-
-</script>
 @endsection

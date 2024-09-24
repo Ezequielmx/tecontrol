@@ -44,6 +44,13 @@
                         </select>
                     </div>
                 </div>
+                <div class="col col-md-2">
+                    <!--nroPedido input-->
+                    <div class="form-group">
+                        <label for="nroPedido">N° Pedido</label>
+                        <input type="text" wire:model="nroPedido" class="form-control">
+                    </div>
+                </div>
                 <div class="col col-md-1 text-center">
                     <!--checkbox finalizadas-->
                     <div class="form-group">
@@ -94,7 +101,8 @@
                     <td>{{ date('d/m/Y', strtotime($cotizacion->fecha)) }}</td>
                     <td>{{ intval((time() - strtotime($cotizacion->fecha)) / 86400) }} días</td>
                     <td>{{ $cotizacion->nro }}</td>
-                    <td style="width:30%">{{ isset($cotizacion->client)? $cotizacion->client->razon_social : '' }}</td>
+                    <td style="width:30%">{{ isset($cotizacion->client)? $cotizacion->client->razon_social : '' }}
+                    </td>
                     <td class="text-right">$ {{ number_format($cotizacion->total(), 2, ",", ".") }}</td>
                     <td>{{ $cotizacion->quotationState->state }}</td>
                     <td>{{ $cotizacion->quotationPriority->priority }}</td>
@@ -111,7 +119,7 @@
                 <tr></tr>
                 <tr class={{ ($selected_id==$cotizacion->id)? '' : 'hiddenRow' }}>
                     <td></td>
-                    <td colspan="9" >
+                    <td colspan="9">
                         <table class="table table-striped">
                             <thead>
                                 <tr>

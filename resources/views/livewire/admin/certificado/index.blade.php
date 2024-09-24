@@ -39,6 +39,7 @@
                         <th>Nro Asist</th>
                         <th>Fecha</th>
                         <th>Cliente</th>
+                        <th>Sector</th>
                         <th>Hoja Asist</th>
                         <th>Detalle</th>
                         <th>Tecnico</th>
@@ -59,6 +60,19 @@
                                         <td>{{ $asistencia->nro }}</td>
                                         <td style="white-space: nowrap">{{ date('d-m-Y', strtotime($asistencia->fecha)) }}</td>
                                         <td>{{ $asistencia->client->razon_social }}</td>
+                                        <td>
+                                            <!-- select for sector -->
+                                            <select class="form-control"
+                                                wire:change="changeVal({{ $detalle->id }}, 'clientssector_id' ,$event.target.value)"
+                                                style="font-size: 12px; padding: 0px 2px; height: 30px; min-width: 100px;">
+                                                <option value="">Seleccione</option>
+                                                @foreach ($asistencia->client->sectors as $sector)
+                                                <option value="{{ $sector->id }}" {{ $detalle->clientssector_id == $sector->id? 'selected' : ''
+                                                    }}>
+                                                    {{ $sector->sector }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
                                         <td>{{ $hoja->nro }}</td>
                                         <td>{{ $detalle->detalle }}</td>
                                         <td>

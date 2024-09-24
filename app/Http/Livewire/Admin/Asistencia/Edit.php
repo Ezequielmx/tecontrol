@@ -174,6 +174,15 @@ class Edit extends Component
         $this->hojaActiva = $this->hojaActiva->fresh();
     }
 
+    public function changeSector(Detallehoja $detallehoja, $sector_id){
+        if ($sector_id == -1){
+            $sector_id = null;
+        }
+        $detallehoja->clientssector_id = $sector_id;
+        $detallehoja->save();
+        $this->hojaActiva = $this->hojaActiva->fresh();
+    }
+
     public function changeCotizacion(Detallehoja $detallehoja, $cotiz_id){
         $detallehoja->quotation_id = $cotiz_id;
         $detallehoja->save();

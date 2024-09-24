@@ -23,6 +23,7 @@ class Index extends Component
     public $quotationStates;
     public $quotationPriorities;
     public $prioridad_id;
+    public $nroPedido;
 
     public $selected_id;
     public $quotationDetails;
@@ -59,6 +60,9 @@ class Index extends Component
         })
         ->when(!$this->finalizadas, function ($query) {
             return $query->where('quotation_state_id', '<', 5);
+        })
+        ->when($this->nroPedido, function($query){
+            return $query->where('nroPedido', 'like', '%'.$this->nroPedido. '%');
         })
         ->paginate(50); 
 

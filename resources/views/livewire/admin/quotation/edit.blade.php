@@ -224,7 +224,8 @@
                                         target="_blank">Abrir</a>
                                     @endif
                                 </label>
-                                <input type="file" wire:model.defer="solicitudCotizacion" class="form-control-file" style="font-size: 12px;">
+                                <input type="file" wire:model.defer="solicitudCotizacion" class="form-control-file"
+                                    style="font-size: 12px;">
                                 <!-- if isset solicitudCotizacion show link for download-->
                             </div>
                         </div>
@@ -236,7 +237,8 @@
                                     <a href="{{ asset('storage/'.$quotation->cotizacion) }}" target="_blank">Abrir</a>
                                     @endif
                                 </label>
-                                <input type="file" wire:model="cotizacion" class="form-control-file" style="font-size: 12px;">
+                                <input type="file" wire:model="cotizacion" class="form-control-file"
+                                    style="font-size: 12px;">
                                 <!-- if isset cotizacion show link for download-->
                             </div>
                         </div>
@@ -248,8 +250,20 @@
                                     <a href="{{ asset('storage/'.$quotation->ordenCompra) }}" target="_blank">Abrir</a>
                                     @endif
                                 </label>
-                                <input type="file" wire:model="ordenCompra" class="form-control-file" style="font-size: 12px;">
+                                <input type="file" wire:model="ordenCompra" class="form-control-file"
+                                    style="font-size: 12px;">
                                 <!-- if isset ordenCompra show link for download-->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!--input for nroPedido-->
+                        <div class="col col-md-6">
+                            <div class="form-group">
+                                <label for="nroPedido">Nro Pedido</label>
+                                <input type="text" wire:model.defer="quotation.nroPedido" class="form-control"
+                                    placeholder="Nro Pedido">
                             </div>
                         </div>
                     </div>

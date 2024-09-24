@@ -2,7 +2,36 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="row">
-                <h1 class="text-2xl font-semibold text-gray-900">{{ $cliente->razon_social }}</h1>
+                <div class="col-md-4">
+                    <h1 class="text-2xl font-semibold text-gray-900">{{ $cliente->razon_social }}</h1>
+                </div>
+                <div class="col-md-3">
+                    @if($sectores->count() > 0)
+                    <div class="form-group">
+                        <label for="sector_id">Sector</label>
+                        <select wire:model="sector_id" class="form-control">
+                            <option value="">Todos</option>
+                            @foreach ($sectores as $sector)
+                            <option value="{{ $sector->id }}">{{ $sector->sector }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @endif
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="sector_id">Buscar</label>
+                        <div class="input-group mb-3">
+                            <input wire:model="search" type="text" class="form-control" placeholder="Buscar...">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" wire:click="clear"><i
+                                        class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-10">
                     <div class="card">
                         <div class="card-header">
@@ -44,7 +73,7 @@
                                                     </strong>
                                                 </div>
                                                 <div style="width: 50%; text-align:right">
-                                                    
+
                                                     <button
                                                         wire:click="downlCertMes({{ date('Y', strtotime($detalles->fecha)) }}, {{ date('m', strtotime($detalles->fecha)) }})"
                                                         class="btn btn-primary btn-sm" style="padding: 2px 6px;
@@ -105,7 +134,8 @@
                                         <td style="width:5%"></td>
                                         <td style="width:5%"></td>
                                         <td>{{ $detalles->detalle }}</td>
-                                        <td style="white-space: nowrap">{{ date('d-m-Y', strtotime($detalles->fecha)) }}
+                                        <td style="white-space: nowrap">{{ date('d-m-Y',
+                                            strtotime($detalles->fecha)) }}
                                         </td>
                                         <td>
                                             @if ($detalles->certpdf)
@@ -131,17 +161,24 @@
                         </div>
                         <div class="card-body">
                             @foreach ($anios as $anio)
-                                <!--button for download patrones from year-->
-                                <button wire:click="downlPatrones({{ $anio->anio }})"
-                                    class="btn btn-primary btn-sm" style="padding: 2px 6px; margin-right: 5px;">
-                                    <i class="fa fa-download"></i> {{ $anio->anio }}
-                                </button>
+                            <!--button for download patrones from year-->
+                            <button wire:click="downlPatrones({{ $anio->anio }})" class="btn btn-primary btn-sm mb-2"
+                                style="padding: 2px 6px; margin-right: 5px;">
+                                <i class="fa fa-download"></i> {{ $anio->anio }}
+                            </button>
                             @endforeach
                         </div>
                     </div>
                 </div>
             </div>
 
+        </div>
+    </div>
+    <!--show loading when wire is working-->
+    <div wire:loading>
+        <div
+            style=" position: fixed;  top:0; left: 0; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #00000080; width: 100vw;">
+            <div class="text-white">Cargando...</div>
         </div>
     </div>
 </div>

@@ -56,7 +56,9 @@ class Create extends Component
         'quotation.lugarEntrega' => 'nullable',
         'quotation.nota' => 'nullable',
         'quotation.fechaContacto' => 'nullable',
-        'quotation.detalleContacto' => 'nullable'
+        'quotation.detalleContacto' => 'nullable',
+
+        'quotation.nroPedido' => 'nullable',
     ];
 
 
@@ -117,8 +119,6 @@ class Create extends Component
     public function guardar()
     {
         $this->validate();
-
-
 
         if ($this->solicitudCotizacion) {
             $year = Carbon::now()->year;

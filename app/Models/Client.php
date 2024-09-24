@@ -51,4 +51,9 @@ class Client extends Model
     {
         return $this->hasMany('App\Models\Patrone');
     }
+
+    public function sectors()
+    {
+        return $this->hasMany('App\Models\ClientsSector');
+    }
 }

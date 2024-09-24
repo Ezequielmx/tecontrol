@@ -7,7 +7,7 @@
             </div>
         </div>
         <div class="card-body">
-            <form >
+            <form>
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
@@ -40,18 +40,51 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="direccion">Dirección</label>
-                    <input type="text" wire:model="client.direccion" class="form-control" id="direccion">
-                </div>
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label for="direccion">Dirección</label>
+                            <input type="text" wire:model="client.direccion" class="form-control" id="direccion">
+                        </div>
 
-                <div class="form-group">
-                    <label for="condicion">Condición</label>
-                    <input type="text" wire:model="client.condicion" class="form-control" id="condicion">
-                </div>
-                <div class="form-group">
-                    <label for="observaciones">Observaciones</label>
-                    <textarea wire:model="client.observaciones" class="form-control" id="observaciones"></textarea>
+                        <div class="form-group">
+                            <label for="condicion">Condición</label>
+                            <input type="text" wire:model="client.condicion" class="form-control" id="condicion">
+                        </div>
+                        <div class="form-group">
+                            <label for="observaciones">Observaciones</label>
+                            <textarea wire:model="client.observaciones" class="form-control"
+                                id="observaciones"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        @if($selectedClientId)
+                        <div class="form-group">
+                            <label for="observaciones">Sectores</label>
+                            <table>
+                                @foreach($client->sectors as $sector)
+                                <tr>
+                                    <td>
+                                        <input type="text" class="form-control" value="{{ $sector->sector }}" 
+                                        wire:change = 'changeNombre({{ $sector->id }}, $event.target.value)'>
+                                    </td>
+                                    <td>
+                                        <button wire:click="removeSector({{ $sector->id }})" class="btn btn-danger btn-sm" {{ $sector->certificados->count() > 0? 'disabled' : '' }}>X</button>
+                                    </td>
+                                </tr>
+                                @endforeach
+                                <tr>
+                                    <td>
+                                        <input type="text" class="form-control" wire:model="newSector">
+                                    </td>
+                                    <td>
+                                         <button wire:click="addSector" class="btn btn-success btn-sm" {{ $newSector == null? 'disabled' : '' }}>+</button>
+                                    </td>
+                            </table>
+                        </div>
+                        @endif
+                    </div>
+
                 </div>
 
             </form>

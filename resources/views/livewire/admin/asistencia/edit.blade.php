@@ -329,6 +329,7 @@
                         <tr>
                             <th>Detalle</th>
                             <th>Cert</th>
+                            <th>Sector</th>
                             <th>Cotizacion</th>
                             <th>Tecnico</th>
                             <th>Fecha Borrador</th>
@@ -352,6 +353,18 @@
                                 <input type="checkbox" class="form-control" {{ $detalle->certificado? 'checked' : '' }}
                                 style="height: 20px;"
                                 wire:change='changeCert({{ $detalle->id }}, $event.target.checked)'>
+                            </td>
+                            <td>
+                                <!-- select for sectores -->
+                                <select class="form-control" style="font-size: 13px; height: 26px; padding: 0px 6px;"
+                                    wire:change='changeSector({{ $detalle->id }}, $event.target.value)' {{ $detalle->certificado? '' : 'disabled' }}>
+                                    <option value="-1">Seleccione</option>
+                                    @foreach ($asistencia->client->sectors as $sector)
+                                    <option value="{{ $sector->id }}" {{ $detalle->clientssector_id == $sector->id? 'selected' : '' }}>
+                                        {{ $sector->sector }}
+                                    </option>
+                                    @endforeach
+                                </select>
                             </td>
                             <td>
                                 <!-- select for cotizaciones -->

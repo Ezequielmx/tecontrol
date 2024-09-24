@@ -262,6 +262,16 @@
                     </div>
                 </div>
             </div>
+            <div class="row">
+                <!--input for nroPedido-->
+                <div class="col col-md-3">
+                    <div class="form-group">
+                        <label for="nroPedido">Nro. Pedido</label>
+                        <input type="text" wire:model.defer="quotation.nroPedido" class="form-control"
+                            placeholder="Nro. Pedido">
+                    </div>
+                </div> 
+            </div>
         </div>
         <div class="card-footer text-right">
             <button class="btn btn-success btn-sm" wire:click="guardar">Guardar</button>
