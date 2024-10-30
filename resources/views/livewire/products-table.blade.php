@@ -261,12 +261,16 @@
                         <button wire:click="cancelEdit()" class="btn btn-danger btn-sm"><i
                                 class="fa fa-times"></i></button>
                         @else
+                        @can('admin.productos.edit')
                         <button wire:click="editedProduct({{ $product->id }})" class="btn btn-primary btn-sm mr-1"><i
                                 class="fa fa-edit"></i></button>
-                        <button wire:click="deleteProduct({{ $product->id }})"
-                            onclick="return confirm('¿Está seguro de que desea eliminar este producto?')"
-                            class="btn btn-danger btn-sm"><i class="fa fa-times"></i>
-                        </button>
+                        @endcan
+                        @can('admin.productos.delete')
+                            <button wire:click="deleteProduct({{ $product->id }})"
+                                onclick="return confirm('¿Está seguro de que desea eliminar este producto?')"
+                                class="btn btn-danger btn-sm"><i class="fa fa-times"></i>
+                            </button>
+                        @endcan
                         @endif
                     </div>
                 </td>

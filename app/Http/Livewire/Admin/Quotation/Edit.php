@@ -11,6 +11,7 @@ use App\Models\Client;
 use App\Models\Product;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
 
 class Edit extends Component
 {
@@ -38,11 +39,14 @@ class Edit extends Component
     public $cotizacion;
     public $ordenCompra;
 
+    public $users;
+
     protected $listeners = ['calcTotal'];
 
     protected $rules = [
         'quotation.nro' => 'required|numeric',
         'quotation.client_id' => 'required',
+        'quotation.user_id' => 'required',
         'quotation.fecha' => 'required',
         'quotation.quotation_state_id' => 'required',
         'quotation.quotation_priority_id' => 'required',
@@ -82,6 +86,9 @@ class Edit extends Component
         $this->quotationPriorities = QuotationPriority::all();
         $this->quotationTypes = QuotationType::all();
         $this->clients = Client::orderby('razon_social')->get();
+        $this->users = User::whereHas('roles', function($query) {
+        $query->whereIn('name', ['Admin', 'Vendedor']);
+        })->get();
     }
 
     public function calcTotal($cambioFact = false){

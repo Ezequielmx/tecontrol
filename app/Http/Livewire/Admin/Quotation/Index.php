@@ -44,8 +44,13 @@ class Index extends Component
     }
     public function render()
     {   
+        if (auth()->user()->hasRole('Admin')) {
+            $cotizaciones = Quotation::orderBy('fecha', 'desc');
+        } else {
+            $cotizaciones = Quotation::where('user_id', auth()->user()->id)->orderBy('fecha', 'desc');
+        }
 
-        $cotizaciones = Quotation::orderBy('fecha', 'desc')
+        $cotizaciones = $cotizaciones
         ->when($this->quot_nro, function ($query) {
             return $query->where('nro', $this->quot_nro);
         })

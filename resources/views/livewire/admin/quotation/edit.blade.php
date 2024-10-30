@@ -18,7 +18,27 @@
                                     placeholder="Fecha">
                             </div>
                         </div>
+                        <!--if rol is admin show select for users-->
+                        @if (auth()->user()->hasRole('Admin'))
+                        <div class="col col-md-2">
+                            <div class="form-group
+                                ">
+                                <label for="user_id">Usuario</label>
+                                <select wire:model="quotation.user_id" class="form-control">
+                                    <option value="">Seleccione un usuario</option>
+                                    @foreach ($users as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            @error('quotation.user_id')
+                            <div class="alert alert-danger">{{ $message }}</div>                              
+                            @enderror
+                        </div>
+                        <div class="col col-md-3">
+                        @else
                         <div class="col col-md-5">
+                        @endif
                             <div class="form-group">
                                 <!--select for clientes-->
                                 <label for="client_id">Cliente</label>

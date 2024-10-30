@@ -25,6 +25,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
         return redirect()->route('admin.asistencias.index');
     }elseif(Auth::user()->hasRole('Usuario Certificados')){
         return redirect()->route('admin.certificados.index');
+    }elseif(Auth::user()->hasRole('Vendedor')){
+        return redirect()->route('admin.cotizaciones.index');
     }else{
         return redirect()->route('login');
     }

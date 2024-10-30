@@ -82,6 +82,7 @@
                     <tr>
                         <th></th>
                         <th>id</th>
+                        <th>Creada por</th>
                         <th>Fecha</th>
                         <th>Tiempo</th>
                         <th>Nro</th>
@@ -98,6 +99,7 @@
                         <button class="btn btn-default btn-xs"><i class="fa-regular fa-eye"></i></button>
                     </td>
                     <td>{{ $cotizacion->id }}</td>
+                    <td>{{ $cotizacion->user->name }}</td>
                     <td>{{ date('d/m/Y', strtotime($cotizacion->fecha)) }}</td>
                     <td>{{ intval((time() - strtotime($cotizacion->fecha)) / 86400) }} días</td>
                     <td>{{ $cotizacion->nro }}</td>

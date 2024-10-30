@@ -39,6 +39,7 @@ class Create extends Component
     protected $rules = [
         'quotation.nro' => 'required|numeric',
         'quotation.client_id' => 'required',
+        'quotation.user_id' => 'required',
         'quotation.fecha' => 'required',
         'quotation.quotation_state_id' => 'required',
         'quotation.quotation_priority_id' => 'required',
@@ -77,6 +78,7 @@ class Create extends Component
         $this->quotation->quotation_type_id = 1;
         $this->quotation->fecha = date('Y-m-d');
         $this->quotation->nro = Quotation::max('nro') + 1;
+        $this->quotation->user_id = auth()->user()->id;
     }
 
     public function render()

@@ -25,6 +25,10 @@ class Quotation extends Model
         return $this->belongsTo('App\Models\Client');
     }
 
+    public function user(){
+        return $this->belongsTo('App\Models\User');
+    }
+
     public function quotationDetails(){
         return $this->hasMany('App\Models\QuotationDetail');
     }
