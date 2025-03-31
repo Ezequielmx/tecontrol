@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\FullCalenderController;
 use App\Http\Controllers\TableroController;
 use App\Http\Controllers\Admin\DashcertController;
+use App\Http\Controllers\Admin\TareaController;
 
 route::get('', [HomeController::class, 'index'])->name('admin.home')->middleware('can:admin.home');
 
@@ -30,7 +31,7 @@ route::resource('clientes', ClienteController::class)->names('admin.clients')->m
 route::resource('proveedores', ProveedorController::class)->names('admin.suppliers')->middleware('can:admin.proveedores.index');
 route::resource('documentos', DocController::class)->names('admin.docs')->middleware('can:admin.documentos');
 
-route::resource('tareas', TaskController::class)->names('admin.tasks');
+route::resource('tareas', TareaController::class)->names('admin.tareas');
 route::resource('mails', MailController::class)->names('admin.mails');
 
 route::resource('cotizaciones', CotizacionController::class)->names('admin.cotizaciones')->middleware('can:admin.cotizaciones.index');

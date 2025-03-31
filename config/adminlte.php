@@ -361,6 +361,7 @@ return [
             'icon'        => 'fa fa-calendar',
             
         ],*/
+
         [
             'text'        => 'Categorias',
             'route'       => 'admin.categories.index',
@@ -451,6 +452,11 @@ return [
             'route'       => 'admin.patrones.index',
             'icon'        => 'fas fa-ruler-combined',
             'can'         => 'patrones',
+        ],
+        [
+            'text'        => 'Tareas',
+            'route'       => 'admin.tareas.index',
+            'icon'        => 'fas fa-list-check', 
         ],
     ], 
 
