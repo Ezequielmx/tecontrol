@@ -5,15 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tarea extends Model
+class Tareaper extends Model
 {
     use HasFactory;
 
-    protected $table = 'tareas';
-    protected $fillable = ['title', 'description', 'quotation_id'];
+    protected $table = 'tareaspers';
+    protected $fillable = ['title', 'description'];
 
     public function updates()
     {
-        return $this->hasMany(Tareaupdate::class, 'task_id');
+        return $this->hasMany(Tareapersupdate::class, 'tareapers_id');
     }
 }

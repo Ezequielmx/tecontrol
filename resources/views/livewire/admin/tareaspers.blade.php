@@ -5,27 +5,13 @@
 
     <div class="row mt-3">
         <div class="col">
-            <h4>Empresa</h4>
+            <h4>Personal</h4>
             @foreach ($tasks as $tarea)
             <div class="card mb-2">
                 <div class="card-body">
                     <h5>{{ $tarea['title'] }}</h5>
                     <p>{{ $tarea['description'] }}</p>
-
-                    @if ($tarea['quotation_id'])
-                    @php
-                    $cotizacion = $quotations->firstWhere('id', $tarea['quotation_id']);
-                    @endphp
-                    <p><strong>Cotización:</strong> {{ $cotizacion->nro }}</p>
-                    <p><strong>Cliente:</strong> {{ isset($cotizacion->client)? $cotizacion->client->razon_social : ''
-                        }}</p>
-                    <p><strong>Monto:</strong> ${{ number_format($cotizacion->total(), 2, ",", ".") }}</p>
-                    <p><strong>Estado:</strong> {{ $cotizacion->quotationState->state }}</p>
-
-                    @endif
-
-                    <p><small>Última actualización: {{ \Carbon\Carbon::parse($tarea['updated_at'])->format('d
-                            M')
+                    <p><small>Última actualización: {{ \Carbon\Carbon::parse($tarea['updated_at'])->format('d M')
                             }}</small></p>
                     <p><small>Observaciones: {{ $tarea['updates_count'] ?? 0 }}</small></p>
                     <button wire:click="selectTask({{ $tarea['id'] }})" data-bs-toggle="modal"
@@ -39,7 +25,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="tareaModal" tabindex="-1" aria-labelledby="tareaModalLabel" aria-hidden="true">
+    <div class="modal fade" id="tareaPersModal" tabindex="-1" aria-labelledby="tareaModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -50,13 +36,6 @@
                     <input type="text" wire:model.defer="title" class="form-control mb-2" placeholder="Título">
                     <textarea wire:model.defer="description" class="form-control mb-2"
                         placeholder="Descripción"></textarea>
-
-                    <select wire:model.defer="quotation_id" class="form-control mb-2">
-                        <option value="">Seleccionar Cotización</option>
-                        @foreach ($quotations as $quotation)
-                        <option value="{{ $quotation->id }}">{{ $quotation->nro }}</option>
-                        @endforeach
-                    </select>
 
                     @if ($selectedTask)
                     <h6>Observaciones</h6>
@@ -77,8 +56,8 @@
     </div>
 
     <script>
-        window.addEventListener('abrir-modal', () => {
-            var modal = new bootstrap.Modal(document.getElementById('tareaModal'));
+        window.addEventListener('abrir-modalp', () => {
+            var modal = new bootstrap.Modal(document.getElementById('tareaPersModal'));
             modal.show();
         });
     </script>

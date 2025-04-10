@@ -3,29 +3,26 @@
 namespace App\Http\Livewire\Admin;
 
 use Livewire\Component;
-use App\Models\Tarea;
-use App\Models\Tareaupdate;
-use App\Models\Quotation;
+use App\Models\Tareaper;
+use App\Models\Tareapersupdate;
 
 
-class Tareas extends Component
+class Tareaspers extends Component
 {
-    public $quotations;
     public $tasks;
-    public $title, $description, $quotation_id;
+    public $title, $description;
     public $selectedTask, $detail;
 
-    protected $listeners = ['abrirModal' => 'resetFields'];
+    protected $listeners = ['abrirModalp' => 'resetFields'];
 
     public function mount()
     {
         $this->loadTasks();
-        $this->quotations = Quotation::orderByDesc('nro')->get();
     }
 
     public function loadTasks()
     {
-        $this->tasks = Tarea::withCount('updates')
+        $this->tasks = Tareaper::withCount('updates')
             ->with('updates')
             ->orderByDesc('updated_at')
             ->get()
@@ -36,12 +33,11 @@ class Tareas extends Component
 
     public function saveTask()
     {
-        Tarea::updateOrCreate(
+        Tareaper::updateOrCreate(
             ['id' => $this->selectedTask],
             [
-            'title' => $this->title,
-            'description' => $this->description,
-            'quotation_id' => $this->quotation_id ?: null
+                'title' => $this->title,
+                'description' => $this->description
             ]
         );
         $this->resetFields();
@@ -50,18 +46,17 @@ class Tareas extends Component
 
     public function selectTask($taskId)
     {
-        $task = Tarea::find($taskId);
+        $task = Tareaper::find($taskId);
         $this->selectedTask = $task->id;
         $this->title = $task->title;
         $this->description = $task->description;
-        $this->quotation_id = $task->quotation_id;
 
-        $this->dispatchBrowserEvent('abrir-modal');
+        $this->dispatchBrowserEvent('abrir-modalp');
     }
 
     public function deleteTask($taskId)
     {
-        $task = Tarea::find($taskId);
+        $task = Tareaper::find($taskId);
         if ($task) {
             $task->delete();
             $this->loadTasks();
@@ -70,8 +65,8 @@ class Tareas extends Component
 
     public function addUpdate()
     {
-        Tareaupdate::create([
-            'task_id' => $this->selectedTask,
+        Tareapersupdate::create([
+            'tareapers_id' => $this->selectedTask,
             'detail' => $this->detail
         ]);
         $this->detail = '';
@@ -81,7 +76,7 @@ class Tareas extends Component
     public function newTask()
     {
         $this->resetFields();
-        $this->dispatchBrowserEvent('abrir-modal');
+        $this->dispatchBrowserEvent('abrir-modalp');
     }
 
     public function resetFields()
@@ -89,11 +84,10 @@ class Tareas extends Component
         $this->selectedTask = null;
         $this->title = '';
         $this->description = '';
-        $this->quotation_id = '';
     }
 
     public function render()
     {
-        return view('livewire.admin.tareas');
+        return view('livewire.admin.tareaspers');
     }
 }
