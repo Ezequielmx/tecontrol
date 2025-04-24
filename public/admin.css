@@ -97,3 +97,21 @@ td, th{
     margin-bottom: 10px;
 }
 
+.timeline {
+    border-left: 3px solid #dee2e6;
+    padding-left: 1rem;
+}
+.timeline .border {
+    position: relative;
+}
+.timeline .border::before {
+    content: "";
+    position: absolute;
+    left: -1.15rem;
+    top: 0.5rem;
+    width: 0.8rem;
+    height: 0.8rem;
+    background-color: #6c757d;
+    border-radius: 50%;
+}
+

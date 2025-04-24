@@ -4,10 +4,10 @@
 
 @section('content')
 <div class="row">
-    <div class="col-md-4 p-3" style="background-color: #cfcaf1; margin-left: -0.5rem">
+    <div class="col-md-5 p-3" style="background-color: #fffbf4; margin-left: -0.5rem">
         @livewire('admin.tareaspers')
     </div>
-    <div class="col-md-8 p-3" style="background-color: #d6f1ca;">
+    <div class="col-md-7 p-3" style="background-color: #e9f6ff;">
         @livewire('admin.tareas')
     </div>
 </div>

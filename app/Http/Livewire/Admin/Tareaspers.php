@@ -28,7 +28,6 @@ class Tareaspers extends Component
             ->get()
             ->toArray(); // Convierte a array puro para evitar problemas en Livewire
         
-        //dd($this->tasks);
     }
 
     public function saveTask()
@@ -71,6 +70,16 @@ class Tareaspers extends Component
         ]);
         $this->detail = '';
         $this->loadTasks();
+    }
+
+    public function deleteUpdateFromTask($updateId)
+    {
+        $update = Tareapersupdate::find($updateId);
+    
+        if ($update) {
+            $update->delete();
+            $this->loadTasks(); // Recargar tareas con updates actualizados
+        }
     }
 
     public function newTask()
