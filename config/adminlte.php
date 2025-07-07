@@ -457,6 +457,7 @@ return [
             'text'        => 'Tareas',
             'route'       => 'admin.tareas.index',
             'icon'        => 'fas fa-list-check', 
+            'can'         => 'admin.tareas',
         ],
     ], 
 

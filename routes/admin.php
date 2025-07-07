@@ -31,7 +31,7 @@ route::resource('clientes', ClienteController::class)->names('admin.clients')->m
 route::resource('proveedores', ProveedorController::class)->names('admin.suppliers')->middleware('can:admin.proveedores.index');
 route::resource('documentos', DocController::class)->names('admin.docs')->middleware('can:admin.documentos');
 
-route::resource('tareas', TareaController::class)->names('admin.tareas');
+route::resource('tareas', TareaController::class)->names('admin.tareas')->middleware('can:admin.tareas');
 route::resource('mails', MailController::class)->names('admin.mails');
 
 route::resource('cotizaciones', CotizacionController::class)->names('admin.cotizaciones')->middleware('can:admin.cotizaciones.index');
