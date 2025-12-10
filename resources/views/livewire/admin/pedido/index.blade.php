@@ -48,6 +48,9 @@
                                 class="fas fa-eraser"></i> Borrar Filtros</button>
                     </div>
                 </div>
+                <div class="col text-right">
+                    <a href="{{ route('admin.pedidos.create') }}" class="btn btn-success btn-sm mt-4">Nuevo Pedido</a>
+                </div>
             </div>
         </div>
     </div>

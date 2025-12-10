@@ -46,6 +46,7 @@ Route::resource('dashcert', DashcertController::class)->names('admin.dashcert');
 Route::resource('dashasist', DashasistController::class)->names('admin.dashasist');
 
 Route::get('pedidos', [PedidoController::class, 'index'])->name('admin.pedidos.index');
+Route::get('pedidos/create', [PedidoController::class, 'create'])->name('admin.pedidos.create');
 Route::get('pedidos/{pedido}/edit', [PedidoController::class, 'edit'])->name('admin.pedidos.edit');
 route::resource('stocks', StockController::class)->names('admin.stocks');
 
