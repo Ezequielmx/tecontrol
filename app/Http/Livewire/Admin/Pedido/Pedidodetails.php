@@ -1,0 +1,65 @@
+<?php
+
+namespace App\Http\Livewire\Admin\Pedido;
+
+use Livewire\Component;
+use App\Models\DetallePedido;
+use App\Models\Pedido;
+use App\Models\Product;
+
+class Pedidodetails extends Component
+{
+    public $pedido;
+    public $detallePedidos;
+    public $products;
+    public $searchTerm;
+
+    protected $listeners = ['render', 'deleteDetalle', 'deleteProds'];
+
+
+    public function mount(Pedido $pedido){
+        $this->pedido = $pedido;
+    }
+
+    public function render()
+    {
+        $this->products = Product::search($this->searchTerm)->orderBy('descripcion_pedido')->get();
+        $this->detallePedidos = DetallePedido::where('pedido_id', $this->pedido->id)->get();
+        return view('livewire.admin.pedido.pedidodetails');
+    }
+
+    public function cambioCantidad($cantidad, $detalle_id){
+        DetallePedido::find($detalle_id)->update(['cantidad' => $cantidad]);
+        $this->emit('calcTotal');
+    }
+
+    public function cambioPrecio($precio, $detalle_id){
+        DetallePedido::find($detalle_id)->update(['precio' => $precio]);
+        $this->emit('calcTotal');
+    }
+
+    public function cambioRecibido($recibido, $detalle_id){
+        $recibido_val = $recibido ? 1 : 0;
+        DetallePedido::find($detalle_id)->update(['recibido' => $recibido_val]);
+        $this->emit('calcTotal', true);
+    }
+
+    public function deleteDetalle($detalle_id){
+        DetallePedido::find($detalle_id)->delete();
+        $this->emit('calcTotal');
+    }
+
+    public function addProduct(Product $product)
+    {
+        $detallePedido = new DetallePedido();
+        $detallePedido->pedido_id = $this->pedido->id;
+        $detallePedido->product_id = $product->id;
+        $detallePedido->descripcion = $product->descripcion_pedido;
+        $detallePedido->cantidad = 1;
+        $detallePedido->precio = $product->precio_compra;
+        $detallePedido->destino = '';
+        $detallePedido->recibido = 0;
+        $detallePedido->cantidad_recibida = 0;
+        $detallePedido->save();
+    }
+}

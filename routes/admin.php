@@ -13,7 +13,7 @@ use App\Http\Controllers\Admin\CotizacionController;
 use App\Http\Controllers\Admin\DashasistController;
 use App\Http\Controllers\Admin\DocController;
 use App\Http\Controllers\Admin\PatroneController;
-use App\Http\Controllers\Admin\PedidoController;
+use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\Admin\StockController;
 use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Admin\UsuarioclienteController;
@@ -45,7 +45,8 @@ route::resource('tablero', TableroController::class)->names('admin.tablero');
 Route::resource('dashcert', DashcertController::class)->names('admin.dashcert');
 Route::resource('dashasist', DashasistController::class)->names('admin.dashasist');
 
-route::resource('pedidos', PedidoController::class)->names('admin.pedidos');
+Route::get('pedidos', [PedidoController::class, 'index'])->name('admin.pedidos.index');
+Route::get('pedidos/{pedido}/edit', [PedidoController::class, 'edit'])->name('admin.pedidos.edit');
 route::resource('stocks', StockController::class)->names('admin.stocks');
 
 Route::get('full-calender', [FullCalenderController::class, 'index']);

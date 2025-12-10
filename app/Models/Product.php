@@ -36,6 +36,11 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
+    public function detallePedidos()
+    {
+        return $this->hasMany(DetallePedido::class, 'product_id');
+    }
+
     public function scopeSearch($query, $searchTerm)
     {
         return $query->where('descripcion_pedido', 'LIKE', '%'.$searchTerm.'%')

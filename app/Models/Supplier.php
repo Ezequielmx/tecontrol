@@ -34,12 +34,22 @@ class Supplier extends Model
         return $this->hasMany(SuppliersContact::class, 'suppliers_id');
     }
 
+    public function pedidos()
+    {
+        return $this->hasMany(Pedido::class, 'supplier_id');
+    }
+
+    public function suppliersContacts()
+    {
+        return $this->hasMany(SuppliersContact::class, 'supplier_id');
+    }
+
     public function scopeSearch(Builder $query, Request $request): Builder
     {
         return $query->when($request->input('razon_social'), function ($query) use ($request) {
             return $query->where('razon_social', 'like', '%' . $request->input('razon_social') . '%');
         });
-           
+
     }
 
 }
