@@ -95,13 +95,6 @@
     <div class="card">
         <div class="card-body">
             <h5>Productos del Pedido</h5>
-            <div class="row">
-                <div class="col col-md-12">
-                    <div class="form-group">
-                        <input type="text" wire:model="searchTerm" class="form-control" placeholder="Buscar productos...">
-                    </div>
-                </div>
-            </div>
             <table class="table table-striped">
                 <thead>
                     <tr>
@@ -118,17 +111,22 @@
                     <tr>
                         <td>{{ $detalle['descripcion'] }}</td>
                         <td>
-                            <input type="number" wire:model="detallePedidos.{{ $index }}.precio" class="form-control" step="0.01">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">$</div>
+                                </div>
+                                <input type="number" wire:model="detallePedidos.{{ $index }}.precio" class="form-control text-right" step="0.01">
+                            </div>
                         </td>
                         <td>
-                            <input type="number" wire:model="detallePedidos.{{ $index }}.cantidad" class="form-control" step="0.01">
+                            <input type="number" wire:model="detallePedidos.{{ $index }}.cantidad" class="form-control text-right" step="0.01">
                         </td>
                         <td>
                             <input type="text" wire:model="detallePedidos.{{ $index }}.destino" class="form-control">
                         </td>
-                        <td>$ {{ number_format($detalle['precio'] * $detalle['cantidad'], 2, ",", ".") }}</td>
+                        <td style="white-space: nowrap; text-align:end">$ {{ number_format($detalle['precio'] * $detalle['cantidad'], 2, ",", ".") }}</td>
                         <td>
-                            <button wire:click="removeDetallePedido({{ $index }})" class="btn btn-sm btn-danger">Eliminar</button>
+                            <button wire:click="removeDetallePedido({{ $index }})" class="btn btn-sm btn-danger">X</button>
                         </td>
                     </tr>
                     @empty
@@ -138,28 +136,7 @@
                     @endforelse
                 </tbody>
             </table>
-
-            <h6>Agregar Productos</h6>
-            <table class="table table-sm">
-                <thead>
-                    <tr>
-                        <th>Producto</th>
-                        <th>Precio Compra</th>
-                        <th>Acción</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($products as $product)
-                    <tr>
-                        <td>{{ $product->descripcion_pedido }}</td>
-                        <td>$ {{ number_format($product->precio_compra, 2, ",", ".") }}</td>
-                        <td>
-                            <button wire:click="addProduct({{ $product->id }})" class="btn btn-sm btn-success">Agregar</button>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#productModal">Agregar Producto</button>
         </div>
     </div>
 
@@ -207,6 +184,47 @@
         <div class="modload">
             <div class="spinload">
                 <i class="fa-solid fa-temperature-three-quarters fa-bounce2"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para seleccionar productos -->
+    <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel"
+        aria-hidden="true" wire:ignore.self>
+        <div class="modal-dialog modal-xl" role="document">
+            <div class="modal-content" style="max-height: 90vh; overflow: scroll;">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title" id="productModalLabel">Productos</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" wire:model="searchTerm" class="form-control" placeholder="Buscar...">
+                    <table class="table table-bordered mt-3">
+                        <thead>
+                            <tr>
+                                <th>Descripcion</th>
+                                <th>Precio Compra</th>
+                                <th>Stock</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($products as $product)
+                            <tr>
+                                <td>{{ $product->descripcion_pedido }}</td>
+                                <td>$ {{ number_format($product->precio_compra, 2, ",", ".") }}</td>
+                                <td>{{ $product->stock_inicial }}</td>
+                                <td>
+                                    <button wire:click="addProduct({{ $product->id }})" data-dismiss="modal"
+                                        class="btn btn-primary btn-sm">Agregar</button>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
