@@ -403,14 +403,14 @@ return [
             'route'       => 'admin.cotizaciones.index',
             'icon'        => 'fas fa-fw fa-dollar-sign',
             'can'         => 'admin.cotizaciones.index',
-            
-        ],/*
+
+        ],
         [
             'text'        => 'Pedidos',
-            'url'       => 'admin.pedidos.index',
+            'route'       => 'admin.pedidos.index',
             'icon'        => 'fas fa-fw fa-shopping-cart',
-            
-        ],*/
+            'can'         => 'admin.pedidos.index',
+        ],
         [
             'text'        => 'Documentos',
             'route'       => 'admin.docs.index',

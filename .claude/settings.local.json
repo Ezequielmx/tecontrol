@@ -4,7 +4,11 @@
       "Bash(dir:*)",
       "Bash(findstr:*)",
       "Bash(php artisan migrate:status:*)",
-      "Bash(php artisan db:show:*)"
+      "Bash(php artisan db:show:*)",
+      "Bash(git checkout:*)",
+      "Bash(php artisan:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
