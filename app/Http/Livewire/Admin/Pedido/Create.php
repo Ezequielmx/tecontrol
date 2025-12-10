@@ -59,7 +59,8 @@ class Create extends Component
         $this->pedido = new Pedido();
         $this->pedidoStates = PedidoState::all();
         $this->suppliers = Supplier::orderby('razon_social')->get();
-        $this->products = Product::all();
+        $this->products = [];
+        $this->contacts = [];
 
         $this->pedido->pedido_state_id = 1;
         $this->pedido->fecha = date('Y-m-d');
@@ -69,9 +70,18 @@ class Create extends Component
 
     public function render()
     {
-        $this->contacts = $this->pedido->supplier_id ? Supplier::find($this->pedido->supplier_id)->suppliersContacts : [];
+        $this->contacts = $this->pedido->supplier_id ? Supplier::find($this->pedido->supplier_id)->supplier : [];
         $this->pedido->condicion = $this->pedido->supplier_id ? Supplier::find($this->pedido->supplier_id)->condicion : '';
-        $this->products = Product::search($this->searchTerm)->orderBy('descripcion_pedido')->get();
+
+        // Solo mostrar productos si hay un proveedor seleccionado
+        if ($this->pedido->supplier_id) {
+            $this->products = Product::where('supplier_id', $this->pedido->supplier_id)
+                ->search($this->searchTerm)
+                ->orderBy('descripcion_pedido')
+                ->get();
+        } else {
+            $this->products = collect([]);
+        }
 
         $total = 0;
         foreach ($this->detallePedidos as $detail) {

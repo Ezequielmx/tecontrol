@@ -64,7 +64,7 @@ class Edit extends Component
 
     public function render()
     {
-        $this->contacts = $this->pedido->supplier_id ? Supplier::find($this->pedido->supplier_id)->suppliersContacts : [];
+        $this->contacts = $this->pedido->supplier_id ? Supplier::find($this->pedido->supplier_id)->supplier : [];
         $this->pedido->condicion = $this->pedido->supplier_id ? Supplier::find($this->pedido->supplier_id)->condicion : '';
 
         $this->calcTotal();

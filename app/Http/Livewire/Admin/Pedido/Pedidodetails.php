@@ -23,7 +23,16 @@ class Pedidodetails extends Component
 
     public function render()
     {
-        $this->products = Product::search($this->searchTerm)->orderBy('descripcion_pedido')->get();
+        // Filtrar productos solo del proveedor del pedido
+        if ($this->pedido->supplier_id) {
+            $this->products = Product::where('supplier_id', $this->pedido->supplier_id)
+                ->search($this->searchTerm)
+                ->orderBy('descripcion_pedido')
+                ->get();
+        } else {
+            $this->products = collect([]);
+        }
+
         $this->detallePedidos = DetallePedido::where('pedido_id', $this->pedido->id)->get();
         return view('livewire.admin.pedido.pedidodetails');
     }
