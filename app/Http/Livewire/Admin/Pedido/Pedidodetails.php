@@ -6,12 +6,14 @@ use Livewire\Component;
 use App\Models\DetallePedido;
 use App\Models\Pedido;
 use App\Models\Product;
+use App\Models\Client;
 
 class Pedidodetails extends Component
 {
     public $pedido;
     public $detallePedidos;
     public $products;
+    public $clients;
     public $searchTerm;
 
     protected $listeners = ['render', 'deleteDetalle', 'deleteProds'];
@@ -19,6 +21,7 @@ class Pedidodetails extends Component
 
     public function mount(Pedido $pedido){
         $this->pedido = $pedido;
+        $this->clients = Client::orderby('razon_social')->get();
     }
 
     public function render()
@@ -52,6 +55,14 @@ class Pedidodetails extends Component
         $this->emit('calcTotal');
     }
 
+    public function cambioDestino($destino, $detalle_id){
+        DetallePedido::find($detalle_id)->update(['destino' => $destino ?: null]);
+    }
+
+    public function cambioCotizacion($cotizacion, $detalle_id){
+        DetallePedido::find($detalle_id)->update(['cotizacion' => $cotizacion ?: null]);
+    }
+
     public function cambioRecibido($recibido, $detalle_id){
         $recibido_val = $recibido ? 1 : 0;
         DetallePedido::find($detalle_id)->update(['recibido' => $recibido_val]);
@@ -71,7 +82,8 @@ class Pedidodetails extends Component
         $detallePedido->descripcion = $product->descripcion_pedido;
         $detallePedido->cantidad = 1;
         $detallePedido->precio = $product->precio_compra;
-        $detallePedido->destino = '';
+        $detallePedido->destino = null;
+        $detallePedido->cotizacion = null;
         $detallePedido->recibido = 0;
         $detallePedido->cantidad_recibida = 0;
         $detallePedido->save();

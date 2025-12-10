@@ -102,6 +102,7 @@
                         <th>Precio</th>
                         <th>Cantidad</th>
                         <th>Destino</th>
+                        <th>Cotización</th>
                         <th>Subtotal</th>
                         <th>Acciones</th>
                     </tr>
@@ -110,7 +111,7 @@
                     @forelse ($detallePedidos as $index => $detalle)
                     <tr>
                         <td>{{ $detalle['descripcion'] }}</td>
-                        <td>
+                        <td style="width: 10%">
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text">$</div>
@@ -118,11 +119,19 @@
                                 <input type="number" wire:model="detallePedidos.{{ $index }}.precio" class="form-control text-right" step="0.01">
                             </div>
                         </td>
-                        <td>
+                        <td style="width: 8%">
                             <input type="number" wire:model="detallePedidos.{{ $index }}.cantidad" class="form-control text-right" step="0.01">
                         </td>
-                        <td>
-                            <input type="text" wire:model="detallePedidos.{{ $index }}.destino" class="form-control">
+                        <td style="width: 15%">
+                            <select wire:model="detallePedidos.{{ $index }}.destino" class="form-control">
+                                <option value="">Seleccione cliente</option>
+                                @foreach ($clients as $client)
+                                <option value="{{ $client->id }}">{{ $client->razon_social }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td style="width: 10%">
+                            <input type="text" wire:model="detallePedidos.{{ $index }}.cotizacion" class="form-control" placeholder="N° Cotiz.">
                         </td>
                         <td style="white-space: nowrap; text-align:end">$ {{ number_format($detalle['precio'] * $detalle['cantidad'], 2, ",", ".") }}</td>
                         <td>
@@ -131,7 +140,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="6" class="text-center">No hay productos agregados</td>
+                        <td colspan="7" class="text-center">No hay productos agregados</td>
                     </tr>
                     @endforelse
                 </tbody>

@@ -11,6 +11,7 @@
                                 <th>Cantidad</th>
                                 <th>Subtotal</th>
                                 <th>Destino</th>
+                                <th>Cotización</th>
                                 <th>Recibido</th>
                                 <th></th>
                             </tr>
@@ -40,7 +41,18 @@
                                     $ {{ number_format($detalle->precio * $detalle->cantidad,2,",",".")}}
                                 </td>
                                 <td style="width: 15%">
-                                    <input type="text" class="form-control" value="{{ $detalle->destino }}" disabled>
+                                    <select wire:change="cambioDestino($event.target.value, {{ $detalle->id }})" class="form-control">
+                                        <option value="">Seleccione cliente</option>
+                                        @foreach ($clients as $client)
+                                        <option value="{{ $client->id }}" {{ $detalle->destino == $client->id ? 'selected' : '' }}>
+                                            {{ $client->razon_social }}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td style="width: 10%">
+                                    <input type="text" wire:change="cambioCotizacion($event.target.value, {{ $detalle->id }})"
+                                        class="form-control" value="{{ $detalle->cotizacion }}" placeholder="N° Cotiz.">
                                 </td>
                                 <td style="width: 5%">
                                     <div class="form-check">

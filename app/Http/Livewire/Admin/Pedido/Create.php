@@ -8,6 +8,7 @@ use App\Models\PedidoState;
 use App\Models\Supplier;
 use App\Models\Product;
 use App\Models\DetallePedido;
+use App\Models\Client;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Storage;
@@ -21,6 +22,7 @@ class Create extends Component
     public $suppliers;
     public $contacts;
     public $products;
+    public $clients;
 
     public $detallePedidos = [];
     public $searchTerm;
@@ -59,6 +61,7 @@ class Create extends Component
         $this->pedido = new Pedido();
         $this->pedidoStates = PedidoState::all();
         $this->suppliers = Supplier::orderby('razon_social')->get();
+        $this->clients = Client::orderby('razon_social')->get();
         $this->products = [];
         $this->contacts = [];
 
@@ -107,6 +110,7 @@ class Create extends Component
             'cantidad' => 1,
             'precio' => $product->precio_compra,
             'destino' => '',
+            'cotizacion' => '',
             'recibido' => 0,
             'cantidad_recibida' => 0
         ];
@@ -148,7 +152,8 @@ class Create extends Component
             $detallePedido->descripcion = $detail['descripcion'];
             $detallePedido->cantidad = $detail['cantidad'];
             $detallePedido->precio = $detail['precio'];
-            $detallePedido->destino = $detail['destino'];
+            $detallePedido->destino = $detail['destino'] ?: null;
+            $detallePedido->cotizacion = $detail['cotizacion'] ?: null;
             $detallePedido->recibido = $detail['recibido'];
             $detallePedido->cantidad_recibida = $detail['cantidad_recibida'];
             $detallePedido->save();
