@@ -25,8 +25,13 @@ class Pedidodetails extends Component
     {
         // Filtrar productos solo del proveedor del pedido
         if ($this->pedido->supplier_id) {
-            $this->products = Product::where('supplier_id', $this->pedido->supplier_id)
-                ->search($this->searchTerm)
+            $this->products = Product::where('proveedor', $this->pedido->supplier_id)
+                ->when($this->searchTerm, function($query) {
+                    return $query->where(function($q) {
+                        $q->where('descripcion_pedido', 'LIKE', '%'.$this->searchTerm.'%')
+                          ->orWhere('descripcion_cotizacion', 'LIKE', '%'.$this->searchTerm.'%');
+                    });
+                })
                 ->orderBy('descripcion_pedido')
                 ->get();
         } else {
